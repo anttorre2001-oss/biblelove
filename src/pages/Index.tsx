@@ -6,6 +6,7 @@ import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useSeasonalTheme } from "@/hooks/useSeasonalTheme";
 import { useReminders } from "@/hooks/useReminders";
 import { useHighlights } from "@/hooks/useHighlights";
+import { useBookmarks } from "@/hooks/useBookmarks";
 import { ReadingCard } from "@/components/ReadingCard";
 import { ProgressRing } from "@/components/ProgressRing";
 import { DailyVerse } from "@/components/DailyVerse";
