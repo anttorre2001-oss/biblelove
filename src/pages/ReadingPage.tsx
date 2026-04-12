@@ -173,9 +173,47 @@ const ReadingPage = () => {
             >
               {notesOpen ? <PanelRightClose className="h-4 w-4" /> : <PanelRightOpen className="h-4 w-4" />}
             </button>
+            <button
+              onClick={() => setHighlightMode(!highlightMode)}
+              className={cn(
+                "h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
+                highlightMode ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground"
+              )}
+              title="Highlight mode"
+            >
+              <Highlighter className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>
+
+      {/* Highlight color bar */}
+      {highlightMode && (
+        <div className="sticky top-[57px] z-20 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
+          <div className="max-w-6xl mx-auto flex items-center gap-3">
+            <span className="text-xs text-muted-foreground font-medium">Tap a verse to highlight:</span>
+            <div className="flex items-center gap-2">
+              {(["gold", "sage", "sky", "rose"] as HighlightColor[]).map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setActiveColor(color)}
+                  className={cn(
+                    "h-6 w-6 rounded-full border-2 transition-all duration-200",
+                    activeColor === color
+                      ? "border-foreground scale-110 ring-2 ring-foreground/20"
+                      : "border-transparent hover:scale-105"
+                  )}
+                  style={{ backgroundColor: highlightColorValues[color] }}
+                  title={color}
+                />
+              ))}
+            </div>
+            <button onClick={() => setHighlightMode(false)} className="ml-auto text-muted-foreground hover:text-foreground">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )
 
       {/* Reading tabs */}
       <div className="border-b border-border bg-card/50 px-4">
