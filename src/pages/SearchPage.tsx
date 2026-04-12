@@ -1,8 +1,9 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search as SearchIcon, BookOpen, Loader2 } from "lucide-react";
+import { Search as SearchIcon, BookOpen, Loader2, ChevronDown, ChevronRight } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ShareVerse } from "@/components/ShareVerse";
+import { BIBLE_CHAPTER_COUNTS } from "@/data/bibleChapters";
 import { cn } from "@/lib/utils";
 
 interface SearchResult {
@@ -35,6 +36,7 @@ const SearchPage = () => {
   const [result, setResult] = useState<SearchResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [expandedBook, setExpandedBook] = useState<string | null>(null);
 
   const handleSearch = useCallback(async () => {
     if (!query.trim()) return;
@@ -58,12 +60,13 @@ const SearchPage = () => {
     }
   }, [query]);
 
-  const handleBookClick = (book: string) => {
-    setQuery(`${book} 1`);
+  const handleChapterClick = (book: string, chapter: number) => {
+    const ref = `${book} ${chapter}`;
+    setQuery(ref);
     setLoading(true);
     setError(null);
     setResult(null);
-    fetch(`https://bible-api.com/${book.replace(/\s+/g, "+")}+1?translation=web`)
+    fetch(`https://bible-api.com/${book.replace(/\s+/g, "+")}+${chapter}?translation=web`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load");
         return res.json();
@@ -73,15 +76,69 @@ const SearchPage = () => {
       .finally(() => setLoading(false));
   };
 
+  const handleBookClick = (book: string) => {
+    if (expandedBook === book) {
+      setExpandedBook(null);
+    } else {
+      setExpandedBook(book);
+    }
+  };
+
+  const renderBookSection = (books: string[], title: string) => (
+    <>
+      <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
+        {title}
+      </h3>
+      <div className="space-y-1 mb-6">
+        {books.map((book) => {
+          const isExpanded = expandedBook === book;
+          const chapterCount = BIBLE_CHAPTER_COUNTS[book] || 1;
+          return (
+            <div key={book} className="rounded-lg border border-border bg-card overflow-hidden">
+              <button
+                onClick={() => handleBookClick(book)}
+                className={cn(
+                  "w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted",
+                  isExpanded && "bg-primary/5 text-primary"
+                )}
+              >
+                <span>{book}</span>
+                <span className="flex items-center gap-1.5 text-muted-foreground">
+                  <span className="text-[10px]">{chapterCount} ch</span>
+                  {isExpanded ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+                </span>
+              </button>
+              {isExpanded && (
+                <div className="border-t border-border px-3 py-3 bg-muted/30">
+                  <div className="flex flex-wrap gap-1.5">
+                    {Array.from({ length: chapterCount }, (_, i) => i + 1).map((ch) => (
+                      <button
+                        key={ch}
+                        onClick={() => handleChapterClick(book, ch)}
+                        className="h-8 w-8 rounded-md border border-border bg-card text-xs font-medium hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors flex items-center justify-center"
+                      >
+                        {ch}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-background pb-20 lg:pb-8 lg:pt-14">
+    <div className="min-h-screen bg-background pb-20 lg:pb-8">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate("/")}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors lg:hidden"
             >
               ← Back
             </button>
@@ -152,34 +209,13 @@ const SearchPage = () => {
             Browse by Book
           </h2>
 
-          <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
-            Old Testament
-          </h3>
-          <div className="flex flex-wrap gap-1.5 mb-6">
-            {BIBLE_BOOKS.slice(0, 39).map((book) => (
-              <button
-                key={book}
-                onClick={() => handleBookClick(book)}
-                className="rounded-lg border border-border bg-card text-foreground px-2.5 py-1.5 text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors"
-              >
-                {book}
-              </button>
-            ))}
-          </div>
-
-          <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
-            New Testament
-          </h3>
-          <div className="flex flex-wrap gap-1.5">
-            {BIBLE_BOOKS.slice(39).map((book) => (
-              <button
-                key={book}
-                onClick={() => handleBookClick(book)}
-                className="rounded-lg border border-border bg-card text-foreground px-2.5 py-1.5 text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors"
-              >
-                {book}
-              </button>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+            <div>
+              {renderBookSection(BIBLE_BOOKS.slice(0, 39), "Old Testament")}
+            </div>
+            <div>
+              {renderBookSection(BIBLE_BOOKS.slice(39), "New Testament")}
+            </div>
           </div>
         </section>
       </div>

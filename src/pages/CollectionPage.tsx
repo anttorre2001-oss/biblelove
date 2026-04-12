@@ -111,12 +111,12 @@ const CollectionPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20 lg:pb-8 lg:pt-14">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-background pb-20 lg:pb-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate("/")} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted transition-colors">
+            <button onClick={() => navigate("/")} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted transition-colors lg:hidden">
               <ArrowLeft className="h-4 w-4 text-muted-foreground" />
             </button>
             <h1 className="font-serif text-2xl font-bold">📚 My Collection</h1>
@@ -155,143 +155,137 @@ const CollectionPage = () => {
           ))}
         </div>
 
-        {/* Tab content */}
-        <div className="rounded-xl border border-border bg-card shadow-warm overflow-hidden">
-          {/* Highlights */}
-          {activeTab === "highlights" && (
-            <div className="divide-y divide-border">
-              {highlights.length === 0 ? (
-                <EmptyState icon={Highlighter} message="No highlights yet. Open a reading and tap the highlighter to save verses." />
-              ) : (
-                groupedHighlights.map(({ day, items, reading }) => (
-                  <div key={day} className="p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <button onClick={() => navigate(`/read/${day}`)} className="text-xs font-bold text-primary hover:underline">
-                        Day {day}
-                      </button>
-                      <span className="text-[11px] text-muted-foreground">· {reading}</span>
-                    </div>
-                    <div className="space-y-2">
-                      {items.map((h) => (
-                        <div
-                          key={h.timestamp}
-                          onClick={() => navigate(`/read/${h.day}`)}
-                          className="flex items-start gap-3 group cursor-pointer rounded-lg p-2 -mx-2 hover:bg-muted/50 transition-colors"
-                        >
-                          <span
-                            className="mt-1.5 h-3 w-3 rounded-full flex-shrink-0 border"
-                            style={{ backgroundColor: highlightColorValues[h.color], borderColor: highlightColorValues[h.color] }}
-                          />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[11px] font-medium text-muted-foreground">{h.reference}</p>
-                            <p className="text-sm text-foreground/85 font-serif leading-relaxed">{h.text}</p>
-                          </div>
-                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
-                            <ShareVerse reference={h.reference} text={h.text} />
-                            <button onClick={() => removeHighlight(h.timestamp)} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-destructive/10 text-destructive/50 hover:text-destructive">
-                              <Trash2 className="h-3 w-3" />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
+        {/* Tab content — masonry card grid on desktop */}
 
-          {/* Bookmarks */}
-          {activeTab === "bookmarks" && (
-            <div className="divide-y divide-border">
-              {bookmarks.length === 0 ? (
-                <EmptyState icon={Bookmark} message="No bookmarks yet. Open a reading and tap the bookmark icon to save verses." />
-              ) : (
-                groupedBookmarks.map(({ day, items, reading }) => (
-                  <div key={day} className="p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <button onClick={() => navigate(`/read/${day}`)} className="text-xs font-bold text-primary hover:underline">
-                        Day {day}
-                      </button>
-                      <span className="text-[11px] text-muted-foreground">· {reading}</span>
-                    </div>
-                    <div className="space-y-2">
-                      {items.map((b) => (
-                        <div
-                          key={b.reference}
-                          onClick={() => navigate(`/read/${b.day}`)}
-                          className="flex items-start gap-3 group cursor-pointer rounded-lg p-2 -mx-2 hover:bg-muted/50 transition-colors"
-                        >
-                          <Bookmark className="h-4 w-4 mt-1 text-primary/60 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[11px] font-medium text-muted-foreground">{b.reference}</p>
-                            <p className="text-sm text-foreground/85 font-serif leading-relaxed">{b.text}</p>
-                          </div>
-                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
-                            <ShareVerse reference={b.reference} text={b.text} />
-                            <button onClick={() => removeBookmark(b.reference)} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-destructive/10 text-destructive/50 hover:text-destructive">
-                              <Trash2 className="h-3 w-3" />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-
-          {/* Notes */}
-          {activeTab === "notes" && (
-            <div className="divide-y divide-border">
-              {notes.length === 0 ? (
-                <EmptyState icon={FileText} message="No notes yet. Open a reading and use the notes panel to write reflections." />
-              ) : (
-                notes.map((n) => (
-                  <button
-                    key={n.day}
-                    onClick={() => navigate(`/read/${n.day}`)}
-                    className="w-full p-4 text-left hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-xs font-bold text-primary">Day {n.day}</p>
-                      <span className="text-[11px] text-muted-foreground">· {n.reading}</span>
-                    </div>
-                    <p className="text-sm text-foreground/80 line-clamp-3 whitespace-pre-wrap font-serif">{n.text}</p>
+        {/* Highlights */}
+        {activeTab === "highlights" && (
+          highlights.length === 0 ? (
+            <EmptyState icon={Highlighter} message="No highlights yet. Open a reading and tap the highlighter to save verses." />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {groupedHighlights.map(({ day, items, reading }) => (
+                <div key={day} className="rounded-xl border border-border bg-card p-4 shadow-warm hover:shadow-warm-lg transition-shadow">
+                  <button onClick={() => navigate(`/read/${day}`)} className="flex items-center gap-2 mb-3 group">
+                    <span className="text-xs font-bold text-primary group-hover:underline">Day {day}</span>
+                    <span className="text-[11px] text-muted-foreground">· {reading}</span>
                   </button>
-                ))
-              )}
-            </div>
-          )}
-
-          {/* Drawings */}
-          {activeTab === "drawings" && (
-            <div>
-              {drawings.length === 0 ? (
-                <EmptyState icon={PenTool} message="No drawings yet. Open a reading and use the Draw tab in the notes panel." />
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
-                  {drawings.map((d) => (
-                    <button
-                      key={d.storageKey}
-                      onClick={() => navigate(`/read/${d.day}`)}
-                      className="rounded-xl border border-border overflow-hidden hover:border-primary/40 hover:shadow-warm transition-all bg-background text-left"
-                    >
-                      <div className="aspect-[4/3] bg-muted/20 flex items-center justify-center">
-                        <PenTool className="h-6 w-6 text-muted-foreground/30" />
+                  <div className="space-y-2">
+                    {items.map((h) => (
+                      <div
+                        key={h.timestamp}
+                        onClick={() => navigate(`/read/${h.day}`)}
+                        className="flex items-start gap-3 group/item cursor-pointer rounded-lg p-2 -mx-2 hover:bg-muted/50 transition-colors"
+                      >
+                        <span
+                          className="mt-1.5 h-3 w-3 rounded-full flex-shrink-0 border"
+                          style={{ backgroundColor: highlightColorValues[h.color], borderColor: highlightColorValues[h.color] }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[11px] font-medium text-muted-foreground">{h.reference}</p>
+                          <p className="text-sm text-foreground/85 font-serif leading-relaxed line-clamp-3">{h.text}</p>
+                        </div>
+                        <div className="flex items-center gap-0.5 opacity-0 group-hover/item:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                          <ShareVerse reference={h.reference} text={h.text} />
+                          <button onClick={() => removeHighlight(h.timestamp)} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-destructive/10 text-destructive/50 hover:text-destructive">
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="px-3 py-2 border-t border-border">
-                        <p className="text-xs font-bold text-primary">Day {d.day}</p>
-                        <p className="text-[11px] text-muted-foreground truncate">{d.reading}</p>
-                      </div>
-                    </button>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              )}
+              ))}
             </div>
-          )}
-        </div>
+          )
+        )}
+
+        {/* Bookmarks */}
+        {activeTab === "bookmarks" && (
+          bookmarks.length === 0 ? (
+            <EmptyState icon={Bookmark} message="No bookmarks yet. Open a reading and tap the bookmark icon to save verses." />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {groupedBookmarks.map(({ day, items, reading }) => (
+                <div key={day} className="rounded-xl border border-border bg-card p-4 shadow-warm hover:shadow-warm-lg transition-shadow">
+                  <button onClick={() => navigate(`/read/${day}`)} className="flex items-center gap-2 mb-3 group">
+                    <span className="text-xs font-bold text-primary group-hover:underline">Day {day}</span>
+                    <span className="text-[11px] text-muted-foreground">· {reading}</span>
+                  </button>
+                  <div className="space-y-2">
+                    {items.map((b) => (
+                      <div
+                        key={b.reference}
+                        onClick={() => navigate(`/read/${b.day}`)}
+                        className="flex items-start gap-3 group/item cursor-pointer rounded-lg p-2 -mx-2 hover:bg-muted/50 transition-colors"
+                      >
+                        <Bookmark className="h-4 w-4 mt-1 text-primary/60 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[11px] font-medium text-muted-foreground">{b.reference}</p>
+                          <p className="text-sm text-foreground/85 font-serif leading-relaxed line-clamp-3">{b.text}</p>
+                        </div>
+                        <div className="flex items-center gap-0.5 opacity-0 group-hover/item:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
+                          <ShareVerse reference={b.reference} text={b.text} />
+                          <button onClick={() => removeBookmark(b.reference)} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-destructive/10 text-destructive/50 hover:text-destructive">
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
+        )}
+
+        {/* Notes */}
+        {activeTab === "notes" && (
+          notes.length === 0 ? (
+            <EmptyState icon={FileText} message="No notes yet. Open a reading and use the notes panel to write reflections." />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {notes.map((n) => (
+                <button
+                  key={n.day}
+                  onClick={() => navigate(`/read/${n.day}`)}
+                  className="rounded-xl border border-border bg-card p-4 shadow-warm hover:shadow-warm-lg hover:border-primary/30 transition-all text-left"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="h-4 w-4 text-primary/60" />
+                    <p className="text-xs font-bold text-primary">Day {n.day}</p>
+                    <span className="text-[11px] text-muted-foreground">· {n.reading}</span>
+                  </div>
+                  <p className="text-sm text-foreground/80 line-clamp-4 whitespace-pre-wrap font-serif">{n.text}</p>
+                </button>
+              ))}
+            </div>
+          )
+        )}
+
+        {/* Drawings */}
+        {activeTab === "drawings" && (
+          drawings.length === 0 ? (
+            <EmptyState icon={PenTool} message="No drawings yet. Open a reading and use the Draw tab in the notes panel." />
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {drawings.map((d) => (
+                <button
+                  key={d.storageKey}
+                  onClick={() => navigate(`/read/${d.day}`)}
+                  className="rounded-xl border border-border overflow-hidden hover:border-primary/40 hover:shadow-warm-lg transition-all bg-card text-left"
+                >
+                  <div className="aspect-[4/3] bg-muted/20 flex items-center justify-center">
+                    <PenTool className="h-6 w-6 text-muted-foreground/30" />
+                  </div>
+                  <div className="px-3 py-2 border-t border-border">
+                    <p className="text-xs font-bold text-primary">Day {d.day}</p>
+                    <p className="text-[11px] text-muted-foreground truncate">{d.reading}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )
+        )}
       </div>
     </div>
   );
@@ -299,7 +293,7 @@ const CollectionPage = () => {
 
 function EmptyState({ icon: Icon, message }: { icon: React.ElementType; message: string }) {
   return (
-    <div className="py-16 text-center px-6">
+    <div className="rounded-xl border border-border bg-card py-16 text-center px-6 shadow-warm">
       <Icon className="h-10 w-10 mx-auto text-muted-foreground/20 mb-4" />
       <p className="text-sm text-muted-foreground/60">{message}</p>
     </div>
