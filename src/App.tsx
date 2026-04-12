@@ -4,7 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/AppSidebar";
 import { BottomNav } from "@/components/BottomNav";
+import { useIsMobile } from "@/hooks/use-mobile";
 import Index from "./pages/Index.tsx";
 import ReadingPage from "./pages/ReadingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
@@ -53,14 +56,42 @@ function AnimatedRoutes() {
   );
 }
 
+function AppLayout() {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <>
+        <AnimatedRoutes />
+        <BottomNav />
+      </>
+    );
+  }
+
+  return (
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <div className="flex-1 flex flex-col">
+          <header className="h-12 flex items-center border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-30">
+            <SidebarTrigger className="ml-3" />
+          </header>
+          <main className="flex-1">
+            <AnimatedRoutes />
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AnimatedRoutes />
-        <BottomNav />
+        <AppLayout />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
