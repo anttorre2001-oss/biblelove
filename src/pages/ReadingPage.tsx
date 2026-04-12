@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { HandwritingCanvas } from "@/components/HandwritingCanvas";
+import { TextNotes } from "@/components/TextNotes";
 import { JournalingPrompt } from "@/components/JournalingPrompt";
 import { cn } from "@/lib/utils";
 
@@ -79,6 +80,7 @@ const ReadingPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [notesOpen, setNotesOpen] = useState(false);
+  const [notesTab, setNotesTab] = useState<"draw" | "type">("type");
 
   const currentReading = plan?.readings[selectedReading];
 
@@ -254,10 +256,35 @@ const ReadingPage = () => {
                 <h3 className="font-serif text-sm font-semibold mb-2">Notes & Reflections</h3>
                 <JournalingPrompt day={dayNum} />
               </div>
-              <HandwritingCanvas
-                storageKey={`bible-notes-day-${dayNum}`}
-                className="flex-1"
-              />
+              {/* Notes tabs */}
+              <div className="flex border-b border-border">
+                <button
+                  onClick={() => setNotesTab("type")}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-medium transition-colors",
+                    notesTab === "type" ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Type className="h-3.5 w-3.5" /> Type
+                </button>
+                <button
+                  onClick={() => setNotesTab("draw")}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-medium transition-colors",
+                    notesTab === "draw" ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Pencil className="h-3.5 w-3.5" /> Draw
+                </button>
+              </div>
+              {notesTab === "type" ? (
+                <TextNotes storageKey={`day-${dayNum}`} />
+              ) : (
+                <HandwritingCanvas
+                  storageKey={`bible-notes-day-${dayNum}`}
+                  className="flex-1"
+                />
+              )}
             </>
           )}
         </aside>
