@@ -200,7 +200,7 @@ const ReadingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col lg:pt-14">
       {/* Top bar */}
       <header className="sticky top-0 z-30 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-3">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
@@ -311,7 +311,7 @@ const ReadingPage = () => {
       <div className="flex-1 flex">
         {/* Scripture panel */}
         <main className={cn("flex-1 overflow-y-auto", notesOpen ? "hidden sm:block" : "")}>
-          <div className="max-w-2xl mx-auto px-6 py-8">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10 py-8">
             {/* Reading header */}
             <div className="mb-6">
               <div className="flex items-center justify-between">

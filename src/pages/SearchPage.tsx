@@ -74,8 +74,8 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="min-h-screen bg-background pb-20 lg:pb-8 lg:pt-14">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">

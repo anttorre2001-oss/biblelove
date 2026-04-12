@@ -55,13 +55,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background lg:pt-14">
       {/* First-visit splash */}
       <WelcomeSplash />
 
       {/* Top bar */}
-      <div className="sticky top-0 z-30 bg-background/90 backdrop-blur-sm border-b border-border px-4 py-3">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
+      <div className="sticky top-0 z-30 bg-background/90 backdrop-blur-sm border-b border-border px-4 sm:px-6 lg:px-8 py-3">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
           <h1 className="font-serif text-lg font-bold">Bible in a Year</h1>
           <div className="flex items-center gap-2">
             <button
@@ -82,7 +82,7 @@ const Index = () => {
       </div>
 
       {/* Hero greeting */}
-      <div className="bg-gradient-to-b from-primary/5 to-transparent px-4 py-8 text-center">
+      <div className="bg-gradient-to-b from-primary/5 to-transparent px-4 sm:px-6 lg:px-8 py-8 md:py-12 text-center">
         <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-3">
           <BookOpen className="h-4 w-4" />
           Day {currentDay} of 365
@@ -95,7 +95,7 @@ const Index = () => {
         </p>
       </div>
 
-      <div className="mx-auto max-w-2xl px-4 -mt-6 relative z-10 pb-24">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 -mt-6 relative z-10 pb-24 lg:pb-8">
         {/* Season & Streak badges */}
         <div className="flex justify-center gap-2 mb-6 flex-wrap">
           <SeasonBadge season={season} label={seasonLabel} />
@@ -131,7 +131,7 @@ const Index = () => {
         )}
 
         {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
           {/* Progress Ring */}
           <div className="rounded-xl border border-border bg-card p-5 shadow-warm flex items-center justify-center">
             <ProgressRing current={completedDays} total={365} />
