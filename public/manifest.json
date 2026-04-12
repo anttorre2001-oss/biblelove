@@ -1,0 +1,16 @@
+{
+  "name": "Bible in a Year",
+  "short_name": "Bible",
+  "description": "Read through the Bible in one year with a warm, daily reading companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f0e6",
+  "theme_color": "#c4572a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}
