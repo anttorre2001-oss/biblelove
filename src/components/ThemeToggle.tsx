@@ -13,10 +13,13 @@ export function ThemeToggle() {
 
   useEffect(() => {
     const root = document.documentElement;
+    const body = document.body;
     if (dark) {
       root.classList.add("dark");
+      body.classList.add("dark");
     } else {
       root.classList.remove("dark");
+      body.classList.remove("dark");
     }
     localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
   }, [dark]);
