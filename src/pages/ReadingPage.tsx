@@ -207,16 +207,33 @@ const ReadingPage = () => {
 
             {scripture && !loading && (
               <div className="prose prose-lg max-w-none">
-                {scripture.verses?.map((verse) => (
-                  <span key={`${verse.chapter}-${verse.verse}`} className="group">
-                    <sup className="text-xs text-primary/50 font-medium mr-0.5 select-none">
-                      {verse.verse}
-                    </sup>
-                    <span className="font-serif text-foreground/90 leading-[1.9] text-lg">
-                      {verse.text}{" "}
+                {scripture.verses?.map((verse, idx, arr) => {
+                  const prevChapter = idx > 0 ? arr[idx - 1].chapter : null;
+                  const showChapterHeader = verse.chapter !== prevChapter;
+                  return (
+                    <span key={`${verse.chapter}-${verse.verse}`}>
+                      {showChapterHeader && (
+                        <div className={cn(
+                          "font-serif text-xl font-bold text-foreground flex items-center gap-3",
+                          idx === 0 ? "mb-4" : "mt-10 mb-4 pt-8 border-t border-border"
+                        )}>
+                          <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary text-sm font-bold">
+                            {verse.chapter}
+                          </span>
+                          {currentReading?.reference.split(/\d/)[0].trim()} {verse.chapter}
+                        </div>
+                      )}
+                      <span className="group">
+                        <sup className="text-xs text-primary/50 font-medium mr-0.5 select-none">
+                          {verse.verse}
+                        </sup>
+                        <span className="font-serif text-foreground/90 leading-[1.9] text-lg">
+                          {verse.text}{" "}
+                        </span>
+                      </span>
                     </span>
-                  </span>
-                )) || (
+                  );
+                }) || (
                   <p className="font-serif text-foreground/90 leading-[1.9] text-lg whitespace-pre-wrap">
                     {scripture.text}
                   </p>
