@@ -283,14 +283,26 @@ const ReadingPage = () => {
                           {currentReading?.reference.split(/\d/)[0].trim()} {verse.chapter}
                         </div>
                       )}
-                      <span className="group">
-                        <sup className="text-xs text-primary/50 font-medium mr-0.5 select-none">
-                          {verse.verse}
-                        </sup>
-                        <span className="font-serif text-foreground/90 leading-[1.9] text-lg">
-                          {verse.text}{" "}
-                        </span>
-                      </span>
+                      {(() => {
+                        const vh = getVerseHighlight(verse.book_name, verse.chapter, verse.verse);
+                        return (
+                          <span
+                            className={cn(
+                              "group inline cursor-default rounded-sm px-0.5 -mx-0.5 transition-colors duration-200",
+                              highlightMode && "cursor-pointer hover:bg-muted",
+                              vh && highlightColorMap[vh.color]
+                            )}
+                            onClick={() => handleVerseTap(verse.book_name, verse.chapter, verse.verse, verse.text)}
+                          >
+                            <sup className="text-xs text-primary/50 font-medium mr-0.5 select-none">
+                              {verse.verse}
+                            </sup>
+                            <span className="font-serif text-foreground/90 leading-[1.9] text-lg">
+                              {verse.text}{" "}
+                            </span>
+                          </span>
+                        );
+                      })()}
                     </span>
                   );
                 }) || (
