@@ -20,11 +20,51 @@ interface BibleApiResponse {
   text: string;
 }
 
-// Parse a reference like "Genesis 1-3" into an API-friendly format
-function parseReference(reference: string): string {
-  return reference
-    .replace(/\s+/g, "+")
-    .replace(/-/g, "-");
+// Split a reference like "Genesis 1-3" into ["Genesis 1", "Genesis 2", "Genesis 3"]
+// or "Psalm 104" into ["Psalm 104"]
+function splitReference(reference: string): string[] {
+  // Match patterns like "Genesis 1-3", "1 Samuel 5-7", "Psalm 104", "Proverbs 3:1-12"
+  const rangeMatch = reference.match(/^(.+?)\s+(\d+)\s*-\s*(\d+)$/);
+  if (rangeMatch) {
+    const book = rangeMatch[1];
+    const start = parseInt(rangeMatch[2], 10);
+    const end = parseInt(rangeMatch[3], 10);
+    const refs: string[] = [];
+    for (let ch = start; ch <= end; ch++) {
+      refs.push(`${book} ${ch}`);
+    }
+    return refs;
+  }
+  // Single chapter or verse range like "Proverbs 3:1-12" or "Psalm 104"
+  return [reference];
+}
+
+async function fetchScripture(reference: string): Promise<BibleApiResponse> {
+  const refs = splitReference(reference);
+  const allVerses: BibleVerse[] = [];
+  let fullText = "";
+
+  for (const ref of refs) {
+    const encoded = ref.replace(/\s+/g, "+");
+    const res = await fetch(`https://bible-api.com/${encoded}?translation=web`);
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({ error: "Unknown error" }));
+      throw new Error(errData.detail || errData.error || `Failed to fetch ${ref}`);
+    }
+    const data = await res.json();
+    if (data.verses) {
+      allVerses.push(...data.verses);
+    }
+    if (data.text) {
+      fullText += data.text;
+    }
+  }
+
+  return {
+    reference,
+    verses: allVerses,
+    text: fullText,
+  };
 }
 
 const ReadingPage = () => {
