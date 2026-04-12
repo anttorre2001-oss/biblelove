@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Bookmark, Calendar, Search } from "lucide-react";
+import { BookOpen, Settings, Bookmark, BookmarkCheck, Calendar, Search } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useSeasonalTheme } from "@/hooks/useSeasonalTheme";
 import { useReminders } from "@/hooks/useReminders";
 import { useHighlights } from "@/hooks/useHighlights";
+import { useBookmarks } from "@/hooks/useBookmarks";
 import { ReadingCard } from "@/components/ReadingCard";
 import { ProgressRing } from "@/components/ProgressRing";
 import { DailyVerse } from "@/components/DailyVerse";
@@ -43,6 +44,7 @@ const Index = () => {
   const { season, seasonLabel } = useSeasonalTheme();
   const { shouldShowNudge, markTodayAsRead } = useReminders();
   const { totalHighlights } = useHighlights();
+  const { bookmarks, totalBookmarks } = useBookmarks();
   const [showSettings, setShowSettings] = useState(false);
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
 
@@ -96,6 +98,12 @@ const Index = () => {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-card border border-border px-3 py-1 text-xs font-medium text-accent-foreground shadow-warm">
               <Bookmark className="h-3 w-3 text-primary" />
               {totalHighlights} highlights
+            </span>
+          )}
+          {totalBookmarks > 0 && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-card border border-border px-3 py-1 text-xs font-medium text-accent-foreground shadow-warm">
+              <BookmarkCheck className="h-3 w-3 text-primary" />
+              {totalBookmarks} bookmarks
             </span>
           )}
         </div>
