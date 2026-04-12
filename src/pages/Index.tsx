@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Bookmark, BookmarkCheck, Calendar, Search } from "lucide-react";
+import { BookOpen, Settings, Bookmark, BookmarkCheck, Calendar, Search, Library } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useSeasonalTheme } from "@/hooks/useSeasonalTheme";
@@ -64,6 +64,12 @@ const Index = () => {
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <h1 className="font-serif text-lg font-bold">Bible in a Year</h1>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/collection")}
+              className="h-9 w-9 rounded-full flex items-center justify-center border border-border bg-card hover:bg-muted shadow-warm transition-colors"
+            >
+              <Library className="h-4 w-4 text-muted-foreground" />
+            </button>
             <button
               onClick={() => navigate("/search")}
               className="h-9 w-9 rounded-full flex items-center justify-center border border-border bg-card hover:bg-muted shadow-warm transition-colors"
