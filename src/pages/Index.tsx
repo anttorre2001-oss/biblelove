@@ -177,6 +177,29 @@ const Index = () => {
           <DailyVerse day={currentDay} />
         </section>
 
+        {/* My Collection Card */}
+        <section className="mb-8">
+          <button
+            onClick={() => navigate("/collection")}
+            className="w-full rounded-xl border border-border bg-card p-5 shadow-warm hover:shadow-warm-lg hover:border-primary/30 transition-all text-left group"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Library className="h-5 w-5 text-primary" />
+                </span>
+                <div>
+                  <h2 className="font-serif text-lg font-semibold group-hover:text-primary transition-colors">My Collection</h2>
+                  <p className="text-sm text-muted-foreground">
+                    {totalHighlights} highlights · {totalBookmarks} bookmarks
+                  </p>
+                </div>
+              </div>
+              <span className="text-muted-foreground group-hover:text-primary transition-colors">→</span>
+            </div>
+          </button>
+        </section>
+
         {/* Mini Calendar */}
         <section className="mb-8">
           <div className="flex items-center gap-2 mb-4">
