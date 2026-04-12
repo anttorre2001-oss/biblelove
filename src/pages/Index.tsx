@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Bookmark, Calendar, Search } from "lucide-react";
+import { BookOpen, Settings, Bookmark, BookmarkCheck, Calendar, Search } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useSeasonalTheme } from "@/hooks/useSeasonalTheme";
