@@ -76,12 +76,33 @@ const ReadingPage = () => {
   const plan = readingPlan[dayNum - 1];
   const { toggleReading, isReadingComplete } = useReadingPlan();
 
+  const { addHighlight, removeHighlight, getHighlightsForDay } = useHighlights();
+  const [highlightMode, setHighlightMode] = useState(false);
+  const [activeColor, setActiveColor] = useState<HighlightColor>("gold");
+  const dayHighlights = getHighlightsForDay(dayNum);
+
   const [selectedReading, setSelectedReading] = useState(0);
   const [scripture, setScripture] = useState<BibleApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [notesOpen, setNotesOpen] = useState(false);
   const [notesTab, setNotesTab] = useState<"draw" | "type">("type");
+
+  const getVerseHighlight = (bookName: string, chapter: number, verse: number) => {
+    const ref = `${bookName} ${chapter}:${verse}`;
+    return dayHighlights.find((h) => h.reference === ref);
+  };
+
+  const handleVerseTap = (bookName: string, chapter: number, verse: number, text: string) => {
+    if (!highlightMode) return;
+    const ref = `${bookName} ${chapter}:${verse}`;
+    const existing = dayHighlights.find((h) => h.reference === ref);
+    if (existing) {
+      removeHighlight(existing.timestamp);
+    } else {
+      addHighlight({ reference: ref, text: text.trim(), color: activeColor, day: dayNum });
+    }
+  };
 
   const currentReading = plan?.readings[selectedReading];
 
