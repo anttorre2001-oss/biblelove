@@ -55,7 +55,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background lg:pt-14">
+    <div className="min-h-screen bg-background">
       {/* First-visit splash */}
       <WelcomeSplash />
 
