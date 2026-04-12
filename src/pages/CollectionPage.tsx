@@ -111,8 +111,8 @@ const CollectionPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="min-h-screen bg-background pb-20 lg:pb-8 lg:pt-14">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -271,7 +271,7 @@ const CollectionPage = () => {
               {drawings.length === 0 ? (
                 <EmptyState icon={PenTool} message="No drawings yet. Open a reading and use the Draw tab in the notes panel." />
               ) : (
-                <div className="grid grid-cols-2 gap-3 p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
                   {drawings.map((d) => (
                     <button
                       key={d.storageKey}
