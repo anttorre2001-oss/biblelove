@@ -13,6 +13,14 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+        serif: ['Lora', 'Georgia', 'serif'],
+      },
+      boxShadow: {
+        warm: 'var(--shadow-warm)',
+        'warm-lg': 'var(--shadow-warm-lg)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
