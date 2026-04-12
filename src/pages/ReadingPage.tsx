@@ -213,7 +213,7 @@ const ReadingPage = () => {
             </button>
           </div>
         </div>
-      )
+      )}
 
       {/* Reading tabs */}
       <div className="border-b border-border bg-card/50 px-4">
