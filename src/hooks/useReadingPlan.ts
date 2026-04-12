@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { readingPlan } from "@/data/readingPlan";
 
 const STORAGE_KEY = "bible-reading-tracker";
 const START_DATE_KEY = "bible-reading-start-date";
 
 interface TrackerState {
-  completedReadings: Record<string, boolean>; // "day-readingIndex" -> true
+  completedReadings: Record<string, boolean>;
 }
 
 function getStartDate(): Date {
@@ -14,14 +15,6 @@ function getStartDate(): Date {
   today.setHours(0, 0, 0, 0);
   localStorage.setItem(START_DATE_KEY, today.toISOString());
   return today;
-}
-
-function getCurrentDay(): number {
-  const start = getStartDate();
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const diff = Math.floor((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-  return Math.max(1, Math.min(diff + 1, 365));
 }
 
 function loadState(): TrackerState {
@@ -37,13 +30,53 @@ function saveState(state: TrackerState) {
 }
 
 export function useReadingPlan() {
-  const [currentDay, setCurrentDay] = useState(getCurrentDay);
   const [state, setState] = useState<TrackerState>(loadState);
   const startDate = getStartDate();
 
   useEffect(() => {
     saveState(state);
   }, [state]);
+
+  const isDayComplete = useCallback(
+    (day: number) => {
+      const plan = readingPlan[day - 1];
+      if (!plan) return false;
+      for (let i = 0; i < plan.readings.length; i++) {
+        if (!state.completedReadings[`${day}-${i}`]) return false;
+      }
+      return true;
+    },
+    [state.completedReadings]
+  );
+
+  // Catch-up system: find the first incomplete day (next unread)
+  const currentDay = useMemo(() => {
+    for (let d = 1; d <= 365; d++) {
+      if (!isDayComplete(d)) return d;
+    }
+    return 365; // all done!
+  }, [isDayComplete]);
+
+  const completedDays = useMemo(() => {
+    let count = 0;
+    for (let d = 1; d <= 365; d++) {
+      if (isDayComplete(d)) count++;
+    }
+    return count;
+  }, [isDayComplete]);
+
+  const isAllComplete = completedDays === 365;
+
+  // Calculate current streak
+  const currentStreak = useMemo(() => {
+    let streak = 0;
+    // Count backwards from the last completed day
+    for (let d = currentDay - 1; d >= 1; d--) {
+      if (isDayComplete(d)) streak++;
+      else break;
+    }
+    return streak;
+  }, [currentDay, isDayComplete]);
 
   const toggleReading = useCallback((day: number, readingIndex: number) => {
     const key = `${day}-${readingIndex}`;
@@ -63,37 +96,17 @@ export function useReadingPlan() {
     [state.completedReadings]
   );
 
-  const isDayComplete = useCallback(
-    (day: number, readingCount: number) => {
-      for (let i = 0; i < readingCount; i++) {
-        if (!state.completedReadings[`${day}-${i}`]) return false;
-      }
-      return true;
-    },
-    [state.completedReadings]
-  );
-
-  const completedDays = (() => {
-    // Count how many unique days have all readings complete
-    // This is approximate — we check days 1 through currentDay
-    let count = 0;
-    for (let d = 1; d <= currentDay; d++) {
-      // We need the reading count per day; assume 2 for simplicity
-      if (isDayComplete(d, 2)) count++;
-    }
-    return count;
-  })();
-
   const totalReadingsCompleted = Object.values(state.completedReadings).filter(Boolean).length;
 
   return {
     currentDay,
-    setCurrentDay,
     startDate,
     toggleReading,
     isReadingComplete,
     isDayComplete,
     completedDays,
     totalReadingsCompleted,
+    currentStreak,
+    isAllComplete,
   };
 }
