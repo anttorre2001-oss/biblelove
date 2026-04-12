@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
+import { useHighlights, type HighlightColor, highlightColorMap, highlightColorValues } from "@/hooks/useHighlights";
 import { HandwritingCanvas } from "@/components/HandwritingCanvas";
 import { TextNotes } from "@/components/TextNotes";
 import { JournalingPrompt } from "@/components/JournalingPrompt";
@@ -75,12 +76,33 @@ const ReadingPage = () => {
   const plan = readingPlan[dayNum - 1];
   const { toggleReading, isReadingComplete } = useReadingPlan();
 
+  const { addHighlight, removeHighlight, getHighlightsForDay } = useHighlights();
+  const [highlightMode, setHighlightMode] = useState(false);
+  const [activeColor, setActiveColor] = useState<HighlightColor>("gold");
+  const dayHighlights = getHighlightsForDay(dayNum);
+
   const [selectedReading, setSelectedReading] = useState(0);
   const [scripture, setScripture] = useState<BibleApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [notesOpen, setNotesOpen] = useState(false);
   const [notesTab, setNotesTab] = useState<"draw" | "type">("type");
+
+  const getVerseHighlight = (bookName: string, chapter: number, verse: number) => {
+    const ref = `${bookName} ${chapter}:${verse}`;
+    return dayHighlights.find((h) => h.reference === ref);
+  };
+
+  const handleVerseTap = (bookName: string, chapter: number, verse: number, text: string) => {
+    if (!highlightMode) return;
+    const ref = `${bookName} ${chapter}:${verse}`;
+    const existing = dayHighlights.find((h) => h.reference === ref);
+    if (existing) {
+      removeHighlight(existing.timestamp);
+    } else {
+      addHighlight({ reference: ref, text: text.trim(), color: activeColor, day: dayNum });
+    }
+  };
 
   const currentReading = plan?.readings[selectedReading];
 
@@ -151,9 +173,47 @@ const ReadingPage = () => {
             >
               {notesOpen ? <PanelRightClose className="h-4 w-4" /> : <PanelRightOpen className="h-4 w-4" />}
             </button>
+            <button
+              onClick={() => setHighlightMode(!highlightMode)}
+              className={cn(
+                "h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
+                highlightMode ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground"
+              )}
+              title="Highlight mode"
+            >
+              <Highlighter className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>
+
+      {/* Highlight color bar */}
+      {highlightMode && (
+        <div className="sticky top-[57px] z-20 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-2">
+          <div className="max-w-6xl mx-auto flex items-center gap-3">
+            <span className="text-xs text-muted-foreground font-medium">Tap a verse to highlight:</span>
+            <div className="flex items-center gap-2">
+              {(["gold", "sage", "sky", "rose"] as HighlightColor[]).map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setActiveColor(color)}
+                  className={cn(
+                    "h-6 w-6 rounded-full border-2 transition-all duration-200",
+                    activeColor === color
+                      ? "border-foreground scale-110 ring-2 ring-foreground/20"
+                      : "border-transparent hover:scale-105"
+                  )}
+                  style={{ backgroundColor: highlightColorValues[color] }}
+                  title={color}
+                />
+              ))}
+            </div>
+            <button onClick={() => setHighlightMode(false)} className="ml-auto text-muted-foreground hover:text-foreground">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Reading tabs */}
       <div className="border-b border-border bg-card/50 px-4">
@@ -223,14 +283,26 @@ const ReadingPage = () => {
                           {currentReading?.reference.split(/\d/)[0].trim()} {verse.chapter}
                         </div>
                       )}
-                      <span className="group">
-                        <sup className="text-xs text-primary/50 font-medium mr-0.5 select-none">
-                          {verse.verse}
-                        </sup>
-                        <span className="font-serif text-foreground/90 leading-[1.9] text-lg">
-                          {verse.text}{" "}
-                        </span>
-                      </span>
+                      {(() => {
+                        const vh = getVerseHighlight(verse.book_name, verse.chapter, verse.verse);
+                        return (
+                          <span
+                            className={cn(
+                              "group inline cursor-default rounded-sm px-0.5 -mx-0.5 transition-colors duration-200",
+                              highlightMode && "cursor-pointer hover:bg-muted",
+                              vh && highlightColorMap[vh.color]
+                            )}
+                            onClick={() => handleVerseTap(verse.book_name, verse.chapter, verse.verse, verse.text)}
+                          >
+                            <sup className="text-xs text-primary/50 font-medium mr-0.5 select-none">
+                              {verse.verse}
+                            </sup>
+                            <span className="font-serif text-foreground/90 leading-[1.9] text-lg">
+                              {verse.text}{" "}
+                            </span>
+                          </span>
+                        );
+                      })()}
                     </span>
                   );
                 }) || (
