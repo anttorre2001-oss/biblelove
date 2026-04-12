@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Home, BookOpen, Search, Bookmark } from "lucide-react";
+import { Home, BookOpen, Search, Library } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 
@@ -7,7 +7,7 @@ const tabs = [
   { path: "/", icon: Home, label: "Home" },
   { path: "/read", icon: BookOpen, label: "Read" },
   { path: "/search", icon: Search, label: "Search" },
-  { path: "/bookmarks", icon: Bookmark, label: "Bookmarks" },
+  { path: "/collection", icon: Library, label: "Collection" },
 ];
 
 export function BottomNav() {

@@ -20,7 +20,6 @@ import { WelcomeSplash } from "@/components/WelcomeSplash";
 import { WeeklyProgress } from "@/components/WeeklyProgress";
 import { MiniCalendar } from "@/components/MiniCalendar";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { MyCollection } from "@/components/MyCollection";
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -171,9 +170,6 @@ const Index = () => {
           <h2 className="font-serif text-xl font-semibold mb-4">✝️ Daily Verse</h2>
           <DailyVerse day={currentDay} />
         </section>
-
-        {/* My Collection */}
-        <MyCollection />
 
         {/* Mini Calendar */}
         <section className="mb-8">

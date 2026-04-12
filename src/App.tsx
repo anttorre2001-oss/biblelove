@@ -8,6 +8,7 @@ import { BottomNav } from "@/components/BottomNav";
 import Index from "./pages/Index.tsx";
 import ReadingPage from "./pages/ReadingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
+import CollectionPage from "./pages/CollectionPage.tsx";
 import BookmarksPage from "./pages/BookmarksPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -43,6 +44,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Index />} />
           <Route path="/read/:day" element={<ReadingPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/collection" element={<CollectionPage />} />
           <Route path="/bookmarks" element={<BookmarksPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
