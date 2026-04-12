@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { Eraser, Undo2, Redo2, Trash2, Download, Pen, Highlighter, PenTool } from "lucide-react";
+import { Eraser, Undo2, Redo2, Trash2, Download, Pen, Highlighter, PenTool, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Slider } from "@/components/ui/slider";
 
 interface HandwritingCanvasProps {
   storageKey: string;
@@ -17,15 +19,15 @@ interface Stroke {
 type BrushType = "pen" | "highlighter" | "fine";
 
 const COLORS = [
-  "#3d2b1f", "#8b4513", "#2d5016", "#1a3a5c",
-  "#c0392b", "#e67e22", "#f1c40f", "#27ae60",
-  "#2980b9", "#8e44ad", "#1abc9c", "#e91e63",
+  "#1a1a2e", "#3d2b1f", "#8b4513", "#1a3a5c",
+  "#c0392b", "#e67e22", "#27ae60", "#2980b9",
+  "#8e44ad", "#e91e63", "#f39c12", "#1abc9c",
 ];
 
-const BRUSH_CONFIGS: Record<BrushType, { width: number; opacity: number; icon: typeof Pen; label: string }> = {
-  pen: { width: 3, opacity: 1, icon: Pen, label: "Pen" },
-  highlighter: { width: 20, opacity: 0.3, icon: Highlighter, label: "Highlighter" },
-  fine: { width: 1.5, opacity: 1, icon: PenTool, label: "Fine Pen" },
+const BRUSH_CONFIGS: Record<BrushType, { width: number; opacity: number; icon: typeof Pen; label: string; description: string }> = {
+  pen: { width: 3, opacity: 1, icon: Pen, label: "Pen", description: "Standard ink pen" },
+  highlighter: { width: 20, opacity: 0.3, icon: Highlighter, label: "Highlighter", description: "Transparent marker" },
+  fine: { width: 1.5, opacity: 1, icon: PenTool, label: "Fine", description: "Precise thin line" },
 };
 
 export function HandwritingCanvas({ storageKey, className }: HandwritingCanvasProps) {
@@ -37,8 +39,8 @@ export function HandwritingCanvas({ storageKey, className }: HandwritingCanvasPr
   const [currentStroke, setCurrentStroke] = useState<Stroke | null>(null);
   const [color, setColor] = useState(COLORS[0]);
   const [brushType, setBrushType] = useState<BrushType>("pen");
+  const [brushSize, setBrushSize] = useState(3);
   const [isEraser, setIsEraser] = useState(false);
-  const [showColors, setShowColors] = useState(false);
 
   const brush = BRUSH_CONFIGS[brushType];
 
@@ -62,14 +64,14 @@ export function HandwritingCanvas({ storageKey, className }: HandwritingCanvasPr
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Ruled lines
-    ctx.strokeStyle = "hsl(35 25% 88%)";
-    ctx.lineWidth = 0.5;
-    for (let y = 30; y < canvas.height; y += 30) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(canvas.width, y);
-      ctx.stroke();
+    // Draw subtle dot grid
+    ctx.fillStyle = "rgba(150,150,150,0.15)";
+    for (let x = 20; x < canvas.width; x += 20) {
+      for (let y = 20; y < canvas.height; y += 20) {
+        ctx.beginPath();
+        ctx.arc(x, y, 0.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
     const allStrokes = currentStroke ? [...strokes, currentStroke] : strokes;
@@ -122,7 +124,8 @@ export function HandwritingCanvas({ storageKey, className }: HandwritingCanvasPr
     if (isEraser) {
       setStrokes((prev) => prev.filter((s) => !s.points.some((p) => Math.abs(p.x - point.x) < 15 && Math.abs(p.y - point.y) < 15)));
     } else {
-      setCurrentStroke({ points: [point], color, width: brush.width, opacity: brush.opacity });
+      const effectiveWidth = brushType === "highlighter" ? brushSize * 5 : brushType === "fine" ? brushSize * 0.5 : brushSize;
+      setCurrentStroke({ points: [point], color, width: effectiveWidth, opacity: brush.opacity });
       setRedoStack([]);
     }
   };
@@ -179,83 +182,121 @@ export function HandwritingCanvas({ storageKey, className }: HandwritingCanvasPr
     link.click();
   };
 
-  return (
-    <div className={cn("flex flex-col", className)}>
-      {/* Toolbar */}
-      <div className="flex items-center gap-1.5 px-3 py-2 border-b border-border bg-card/50 flex-wrap">
-        {/* Brush types */}
-        {(Object.keys(BRUSH_CONFIGS) as BrushType[]).map((bt) => {
-          const cfg = BRUSH_CONFIGS[bt];
-          const Icon = cfg.icon;
-          return (
-            <button
-              key={bt}
-              onClick={() => { setBrushType(bt); setIsEraser(false); }}
-              className={cn(
-                "h-7 w-7 rounded-md flex items-center justify-center transition-colors",
-                brushType === bt && !isEraser ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground"
-              )}
-              title={cfg.label}
-            >
-              <Icon className="h-3.5 w-3.5" />
-            </button>
-          );
-        })}
-
-        <div className="w-px h-5 bg-border mx-0.5" />
-
-        {/* Color picker toggle */}
-        <button
-          onClick={() => setShowColors(!showColors)}
-          className="h-7 w-7 rounded-md flex items-center justify-center border-2 border-border hover:border-primary transition-colors"
-        >
-          <div className="h-4 w-4 rounded-full" style={{ backgroundColor: color }} />
-        </button>
-
-        <div className="w-px h-5 bg-border mx-0.5" />
-
-        <button
-          onClick={() => setIsEraser(!isEraser)}
-          className={cn("h-7 w-7 rounded-md flex items-center justify-center transition-colors", isEraser ? "bg-destructive/10 text-destructive" : "hover:bg-muted text-muted-foreground")}
-          title="Eraser"
-        >
-          <Eraser className="h-3.5 w-3.5" />
-        </button>
-        <button onClick={handleUndo} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-muted text-muted-foreground transition-colors" title="Undo">
-          <Undo2 className="h-3.5 w-3.5" />
-        </button>
-        <button onClick={handleRedo} disabled={redoStack.length === 0} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-muted text-muted-foreground transition-colors disabled:opacity-30" title="Redo">
-          <Redo2 className="h-3.5 w-3.5" />
-        </button>
-        <button onClick={handleExport} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-muted text-muted-foreground transition-colors" title="Export as PNG">
-          <Download className="h-3.5 w-3.5" />
-        </button>
-        <button onClick={handleClear} className="h-7 w-7 rounded-md flex items-center justify-center hover:bg-muted text-muted-foreground transition-colors" title="Clear all">
-          <Trash2 className="h-3.5 w-3.5" />
-        </button>
-      </div>
-
-      {/* Color palette (expandable) */}
-      {showColors && (
-        <div className="flex flex-wrap gap-1.5 px-3 py-2 border-b border-border bg-card/30">
-          {COLORS.map((c) => (
-            <button
-              key={c}
-              onClick={() => { setColor(c); setIsEraser(false); }}
-              className={cn(
-                "h-6 w-6 rounded-full border-2 transition-all",
-                color === c && !isEraser ? "ring-2 ring-primary scale-110 border-primary" : "border-border hover:scale-105"
-              )}
-              style={{ backgroundColor: c }}
-            />
-          ))}
-        </div>
+  const ToolButton = ({ onClick, active, disabled, title, children }: { onClick: () => void; active?: boolean; disabled?: boolean; title: string; children: React.ReactNode }) => (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      title={title}
+      className={cn(
+        "h-9 w-9 rounded-lg flex items-center justify-center transition-all duration-200",
+        active ? "bg-primary text-primary-foreground shadow-sm" : "hover:bg-muted text-muted-foreground hover:text-foreground",
+        disabled && "opacity-30 cursor-not-allowed"
       )}
+    >
+      {children}
+    </button>
+  );
+
+  return (
+    <div className={cn("flex flex-col h-full", className)}>
+      {/* Toolbar */}
+      <div className="flex items-center gap-1 px-3 py-2 border-b border-border bg-background/80 backdrop-blur-sm">
+        {/* Brush types */}
+        <div className="flex items-center bg-muted/50 rounded-lg p-0.5 gap-0.5">
+          {(Object.keys(BRUSH_CONFIGS) as BrushType[]).map((bt) => {
+            const cfg = BRUSH_CONFIGS[bt];
+            const Icon = cfg.icon;
+            return (
+              <button
+                key={bt}
+                onClick={() => { setBrushType(bt); setIsEraser(false); }}
+                title={`${cfg.label} — ${cfg.description}`}
+                className={cn(
+                  "h-8 px-2.5 rounded-md flex items-center gap-1.5 text-xs font-medium transition-all duration-200",
+                  brushType === bt && !isEraser
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">{cfg.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="w-px h-6 bg-border mx-1" />
+
+        {/* Color picker */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              className="h-9 w-9 rounded-lg flex items-center justify-center hover:bg-muted transition-colors"
+              title="Choose color"
+            >
+              <div className="h-5 w-5 rounded-full ring-2 ring-border shadow-sm" style={{ backgroundColor: color }} />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-3" side="bottom" align="start">
+            <div className="space-y-3">
+              <p className="text-xs font-medium text-muted-foreground">Color</p>
+              <div className="grid grid-cols-6 gap-1.5">
+                {COLORS.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => { setColor(c); setIsEraser(false); }}
+                    className={cn(
+                      "h-7 w-7 rounded-full transition-all duration-200",
+                      color === c ? "ring-2 ring-primary ring-offset-2 ring-offset-background scale-110" : "hover:scale-110"
+                    )}
+                    style={{ backgroundColor: c }}
+                  />
+                ))}
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-xs font-medium text-muted-foreground">Size: {brushSize}</p>
+                <Slider
+                  value={[brushSize]}
+                  onValueChange={([v]) => setBrushSize(v)}
+                  min={1}
+                  max={10}
+                  step={0.5}
+                  className="w-36"
+                />
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+
+        <div className="w-px h-6 bg-border mx-1" />
+
+        <ToolButton onClick={() => setIsEraser(!isEraser)} active={isEraser} title="Eraser">
+          <Eraser className="h-4 w-4" />
+        </ToolButton>
+
+        <div className="flex-1" />
+
+        {/* Action buttons */}
+        <div className="flex items-center gap-0.5">
+          <ToolButton onClick={handleUndo} disabled={strokes.length === 0} title="Undo">
+            <Undo2 className="h-4 w-4" />
+          </ToolButton>
+          <ToolButton onClick={handleRedo} disabled={redoStack.length === 0} title="Redo">
+            <Redo2 className="h-4 w-4" />
+          </ToolButton>
+          <ToolButton onClick={handleExport} title="Export as PNG">
+            <Download className="h-4 w-4" />
+          </ToolButton>
+          <ToolButton onClick={handleClear} title="Clear all">
+            <Trash2 className="h-4 w-4" />
+          </ToolButton>
+        </div>
+      </div>
 
       {/* Canvas */}
       <div
         ref={containerRef}
-        className="flex-1 min-h-[300px] bg-card rounded-b-xl border border-t-0 border-border overflow-hidden"
+        className="flex-1 min-h-[300px] bg-card overflow-hidden"
         style={{ touchAction: "none" }}
       >
         <canvas
