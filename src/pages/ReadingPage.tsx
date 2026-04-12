@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
+import { useHighlights, type HighlightColor, highlightColorMap, highlightColorValues } from "@/hooks/useHighlights";
 import { HandwritingCanvas } from "@/components/HandwritingCanvas";
 import { TextNotes } from "@/components/TextNotes";
 import { JournalingPrompt } from "@/components/JournalingPrompt";
