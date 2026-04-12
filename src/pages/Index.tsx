@@ -100,6 +100,12 @@ const Index = () => {
               {totalHighlights} highlights
             </span>
           )}
+          {totalBookmarks > 0 && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-card border border-border px-3 py-1 text-xs font-medium text-accent-foreground shadow-warm">
+              <BookmarkCheck className="h-3 w-3 text-primary" />
+              {totalBookmarks} bookmarks
+            </span>
+          )}
         </div>
 
         {/* Gentle Nudge */}
