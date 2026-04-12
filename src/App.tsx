@@ -8,11 +8,14 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BottomNav } from "@/components/BottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTheme } from "@/hooks/useTheme";
 import Index from "./pages/Index.tsx";
 import ReadingPage from "./pages/ReadingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
 import CollectionPage from "./pages/CollectionPage.tsx";
 import BookmarksPage from "./pages/BookmarksPage.tsx";
+import SettingsPage from "./pages/SettingsPage.tsx";
+import TheologyPage from "./pages/TheologyPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -49,6 +52,8 @@ function AnimatedRoutes() {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/collection" element={<CollectionPage />} />
           <Route path="/bookmarks" element={<BookmarksPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/theology" element={<TheologyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
@@ -58,6 +63,8 @@ function AnimatedRoutes() {
 
 function AppLayout() {
   const isMobile = useIsMobile();
+  // Initialize theme on mount
+  useTheme();
 
   if (isMobile) {
     return (
