@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useHighlights, type HighlightColor, highlightColorMap, highlightColorValues } from "@/hooks/useHighlights";
@@ -218,6 +219,7 @@ const ReadingPage = () => {
             <button onClick={() => navigate(`/read/${Math.min(365, dayNum + 1)}`)} disabled={dayNum >= 365} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-30">
               <ChevronRight className="h-4 w-4" />
             </button>
+            <ThemeToggle />
             <button onClick={() => setShowPrefs(!showPrefs)} className={cn("h-8 w-8 rounded-lg flex items-center justify-center transition-colors", showPrefs ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground")} title="Reading preferences">
               <Settings2 className="h-4 w-4" />
             </button>
