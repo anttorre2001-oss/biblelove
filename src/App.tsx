@@ -4,9 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { BottomNav } from "@/components/BottomNav";
 import Index from "./pages/Index.tsx";
 import ReadingPage from "./pages/ReadingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
+import BookmarksPage from "./pages/BookmarksPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -41,6 +43,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<Index />} />
           <Route path="/read/:day" element={<ReadingPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/bookmarks" element={<BookmarksPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
@@ -55,6 +58,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AnimatedRoutes />
+        <BottomNav />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
