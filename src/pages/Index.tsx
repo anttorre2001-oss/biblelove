@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Bookmark, Flame, Calendar } from "lucide-react";
+import { BookOpen, Settings, Bookmark, Calendar, Search } from "lucide-react";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useSeasonalTheme } from "@/hooks/useSeasonalTheme";
@@ -18,7 +18,7 @@ import { CompletionCelebration } from "@/components/CompletionCelebration";
 import { WelcomeSplash } from "@/components/WelcomeSplash";
 import { WeeklyProgress } from "@/components/WeeklyProgress";
 import { MiniCalendar } from "@/components/MiniCalendar";
-import splashBg from "@/assets/splash-bg.jpg";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -57,26 +57,34 @@ const Index = () => {
       {/* First-visit splash */}
       <WelcomeSplash />
 
-      {/* Compact hero banner for return visits */}
-      <div className="relative h-36 sm:h-44 overflow-hidden">
-        <img
-          src={splashBg}
-          alt=""
-          className="h-full w-full object-cover"
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-black/30" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-white drop-shadow-md mb-1">
-              {getGreeting()}.
-            </h1>
-            <p className="text-white/70 text-sm">
-              Day {currentDay} of 365
-            </p>
+      {/* Top bar */}
+      <div className="sticky top-0 z-30 bg-background/90 backdrop-blur-sm border-b border-border px-4 py-3">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
+          <h1 className="font-serif text-lg font-bold">Bible in a Year</h1>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/search")}
+              className="h-9 w-9 rounded-full flex items-center justify-center border border-border bg-card hover:bg-muted shadow-warm transition-colors"
+            >
+              <Search className="h-4 w-4 text-muted-foreground" />
+            </button>
+            <ThemeToggle />
           </div>
         </div>
+      </div>
+
+      {/* Hero greeting */}
+      <div className="bg-gradient-to-b from-primary/5 to-transparent px-4 py-8 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-3">
+          <BookOpen className="h-4 w-4" />
+          Day {currentDay} of 365
+        </div>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight mb-1">
+          {getGreeting()}.
+        </h2>
+        <p className="text-muted-foreground text-lg">
+          Here is your reading for today.
+        </p>
       </div>
 
       <div className="mx-auto max-w-2xl px-4 -mt-6 relative z-10 pb-12">
