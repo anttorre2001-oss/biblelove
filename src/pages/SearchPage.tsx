@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search as SearchIcon, BookOpen, ArrowRight, Loader2 } from "lucide-react";
+import { Search as SearchIcon, BookOpen, Loader2 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { ShareVerse } from "@/components/ShareVerse";
 import { cn } from "@/lib/utils";
 
 interface SearchResult {
@@ -58,7 +60,6 @@ const SearchPage = () => {
 
   const handleBookClick = (book: string) => {
     setQuery(`${book} 1`);
-    // Auto-search
     setLoading(true);
     setError(null);
     setResult(null);
@@ -73,17 +74,20 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20">
       <div className="mx-auto max-w-2xl px-4 py-8">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <button
-            onClick={() => navigate("/")}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ← Back
-          </button>
-          <h1 className="font-serif text-2xl font-bold">Search the Bible</h1>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate("/")}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← Back
+            </button>
+            <h1 className="font-serif text-2xl font-bold text-foreground">Search the Bible</h1>
+          </div>
+          <ThemeToggle />
         </div>
 
         {/* Search bar */}
@@ -96,7 +100,7 @@ const SearchPage = () => {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               placeholder="Search verse, e.g. John 3:16 or Romans 8"
-              className="w-full rounded-xl border border-border bg-card pl-10 pr-4 py-3 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="w-full rounded-xl border border-border bg-card text-foreground pl-10 pr-4 py-3 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/30"
             />
           </div>
           <button
@@ -118,7 +122,10 @@ const SearchPage = () => {
         {/* Results */}
         {result && (
           <div className="rounded-xl border border-border bg-card p-6 shadow-warm mb-8">
-            <h2 className="font-serif text-xl font-bold mb-4">{result.reference}</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-serif text-xl font-bold text-foreground">{result.reference}</h2>
+              <ShareVerse reference={result.reference} text={result.text} />
+            </div>
             <div className="space-y-1">
               {result.verses?.map((v) => (
                 <span key={`${v.chapter}-${v.verse}`}>
@@ -140,12 +147,11 @@ const SearchPage = () => {
 
         {/* Browse by book */}
         <section>
-          <h2 className="font-serif text-lg font-semibold mb-4 flex items-center gap-2">
+          <h2 className="font-serif text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-primary" />
             Browse by Book
           </h2>
 
-          {/* Old Testament */}
           <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
             Old Testament
           </h3>
@@ -154,14 +160,13 @@ const SearchPage = () => {
               <button
                 key={book}
                 onClick={() => handleBookClick(book)}
-                className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors"
+                className="rounded-lg border border-border bg-card text-foreground px-2.5 py-1.5 text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors"
               >
                 {book}
               </button>
             ))}
           </div>
 
-          {/* New Testament */}
           <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
             New Testament
           </h3>
@@ -170,7 +175,7 @@ const SearchPage = () => {
               <button
                 key={book}
                 onClick={() => handleBookClick(book)}
-                className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors"
+                className="rounded-lg border border-border bg-card text-foreground px-2.5 py-1.5 text-xs font-medium hover:bg-muted hover:border-primary/30 transition-colors"
               >
                 {book}
               </button>

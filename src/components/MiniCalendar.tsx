@@ -78,7 +78,7 @@ export function MiniCalendar({ currentDay, isDayComplete, onDaySelect, startDate
               onClick={() => d.readingDay && onDaySelect(d.readingDay)}
               disabled={!d.readingDay}
               className={cn(
-                "h-7 w-7 rounded-full text-[11px] font-medium transition-all mx-auto",
+                "relative h-7 w-7 rounded-full text-[11px] font-medium transition-all mx-auto flex items-center justify-center",
                 complete && "bg-primary text-primary-foreground",
                 isCurrent && !complete && "ring-1 ring-primary text-primary",
                 d.isToday && !complete && !isCurrent && "bg-accent text-accent-foreground",
@@ -86,7 +86,10 @@ export function MiniCalendar({ currentDay, isDayComplete, onDaySelect, startDate
                 !d.readingDay && "text-muted-foreground/30 cursor-default"
               )}
             >
-              {d.date}
+              <span>{d.date}</span>
+              {complete && (
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary-foreground" />
+              )}
             </button>
           );
         })}

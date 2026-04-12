@@ -89,7 +89,7 @@ const Index = () => {
         </p>
       </div>
 
-      <div className="mx-auto max-w-2xl px-4 -mt-6 relative z-10 pb-12">
+      <div className="mx-auto max-w-2xl px-4 -mt-6 relative z-10 pb-24">
         {/* Season & Streak badges */}
         <div className="flex justify-center gap-2 mb-6 flex-wrap">
           <SeasonBadge season={season} label={seasonLabel} />

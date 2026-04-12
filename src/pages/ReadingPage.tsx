@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info, Share2 } from "lucide-react";
+import { AudioPlayer } from "@/components/AudioPlayer";
+import { ShareVerse } from "@/components/ShareVerse";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { readingPlan } from "@/data/readingPlan";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
@@ -312,7 +314,13 @@ const ReadingPage = () => {
           <div className="max-w-2xl mx-auto px-6 py-8">
             {/* Reading header */}
             <div className="mb-6">
-              <h2 className="font-serif text-2xl font-bold mb-1">{currentReading?.reference}</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="font-serif text-2xl font-bold mb-1">{currentReading?.reference}</h2>
+                <div className="flex items-center gap-1">
+                  {scripture && <ShareVerse reference={currentReading?.reference || ""} text={scripture.text} />}
+                  {scripture && <AudioPlayer text={scripture.text} />}
+                </div>
+              </div>
               <p className="text-sm text-muted-foreground">World English Bible</p>
             </div>
 
