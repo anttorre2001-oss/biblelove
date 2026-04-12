@@ -88,12 +88,7 @@ const ReadingPage = () => {
     setLoading(true);
     setError(null);
 
-    const ref = parseReference(currentReading.reference);
-    fetch(`https://bible-api.com/${ref}?translation=web`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch scripture");
-        return res.json();
-      })
+    fetchScripture(currentReading.reference)
       .then((data) => {
         setScripture(data);
         setLoading(false);
