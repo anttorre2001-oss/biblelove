@@ -4,21 +4,13 @@ import { useReadingPreferences } from "@/hooks/useReadingPreferences";
 import { ReminderSettings } from "@/components/ReminderSettings";
 import { useReminders } from "@/hooks/useReminders";
 import { cn } from "@/lib/utils";
-import { Settings, Palette, Globe, Type, Bell, RotateCcw } from "lucide-react";
+import { Settings, Palette, Globe, Type, Bell, RotateCcw, Sun, Moon } from "lucide-react";
 
 const SettingsPage = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, isDark, toggleDark } = useTheme();
   const { translationId, setTranslationId } = useTranslation();
   const { prefs, updatePref, resetPrefs } = useReadingPreferences();
   const reminders = useReminders();
-
-  const themeColors: Record<ThemeProfile, { bg: string; accent: string; fg: string }> = {
-    parchment: { bg: "bg-amber-50", accent: "bg-orange-500", fg: "text-amber-900" },
-    midnight: { bg: "bg-slate-900", accent: "bg-blue-400", fg: "text-blue-100" },
-    forest: { bg: "bg-emerald-950", accent: "bg-emerald-400", fg: "text-emerald-100" },
-    sepia: { bg: "bg-yellow-100", accent: "bg-yellow-700", fg: "text-yellow-900" },
-    contrast: { bg: "bg-black", accent: "bg-white", fg: "text-white" },
-  };
 
   return (
     <div className="min-h-screen bg-background pb-24 lg:pb-8">
@@ -33,6 +25,31 @@ const SettingsPage = () => {
           </div>
         </div>
 
+        {/* Dark Mode Toggle */}
+        <section className="mb-8">
+          <button
+            onClick={toggleDark}
+            className="w-full flex items-center justify-between p-4 rounded-xl border border-border bg-card hover:bg-muted/50 transition-colors"
+          >
+            <div className="flex items-center gap-3">
+              {isDark ? <Moon className="h-5 w-5 text-primary" /> : <Sun className="h-5 w-5 text-primary" />}
+              <div className="text-left">
+                <p className="font-medium text-sm text-foreground">{isDark ? "Dark Mode" : "Light Mode"}</p>
+                <p className="text-xs text-muted-foreground">Toggle between light and dark appearance</p>
+              </div>
+            </div>
+            <div className={cn(
+              "w-12 h-7 rounded-full relative transition-colors",
+              isDark ? "bg-primary" : "bg-muted"
+            )}>
+              <div className={cn(
+                "absolute top-0.5 h-6 w-6 rounded-full bg-card shadow-sm transition-transform",
+                isDark ? "translate-x-5" : "translate-x-0.5"
+              )} />
+            </div>
+          </button>
+        </section>
+
         {/* Theme Profiles */}
         <section className="mb-8">
           <div className="flex items-center gap-2 mb-4">
@@ -42,7 +59,6 @@ const SettingsPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {(Object.keys(themeProfiles) as ThemeProfile[]).map((key) => {
               const profile = themeProfiles[key];
-              const colors = themeColors[key];
               const active = theme === key;
               return (
                 <button
@@ -55,14 +71,14 @@ const SettingsPage = () => {
                       : "border-border hover:border-primary/30 hover:bg-muted/50"
                   )}
                 >
-                  <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center flex-shrink-0", colors.bg)}>
-                    <div className={cn("h-4 w-4 rounded-full", colors.accent)} />
+                  <div className="h-10 w-10 rounded-lg flex items-center justify-center bg-muted border border-border flex-shrink-0">
+                    <span className="text-lg">{profile.emoji}</span>
                   </div>
                   <div>
-                    <p className="font-medium text-sm">{profile.emoji} {profile.label}</p>
+                    <p className="font-medium text-sm text-foreground">{profile.label}</p>
                     <p className="text-xs text-muted-foreground">{profile.description}</p>
                   </div>
-                  {active && <span className="ml-auto text-primary text-sm">✓</span>}
+                  {active && <span className="ml-auto text-primary text-sm font-bold">✓</span>}
                 </button>
               );
             })}
@@ -89,7 +105,7 @@ const SettingsPage = () => {
               >
                 <span className="text-lg">{t.languageFlag}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{t.name}</p>
+                  <p className="text-sm font-medium text-foreground truncate">{t.name}</p>
                   <p className="text-xs text-muted-foreground">{t.language}</p>
                 </div>
                 {translationId === t.id && <span className="text-primary text-sm flex-shrink-0">✓</span>}
