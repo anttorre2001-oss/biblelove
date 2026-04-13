@@ -18,7 +18,18 @@ import SettingsPage from "./pages/SettingsPage.tsx";
 import TheologyPage from "./pages/TheologyPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Scripture text is immutable for a given reference + translation.
+      staleTime: 1000 * 60 * 60 * 24, // 24h
+      gcTime: 1000 * 60 * 60 * 24 * 7, // keep in memory for 7d
+      retry: 2,
+      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10_000),
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },

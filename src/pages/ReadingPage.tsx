@@ -1,6 +1,8 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info, Share2, GraduationCap, Maximize2, Minimize2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info, GraduationCap, Maximize2, Minimize2, RefreshCw } from "lucide-react";
+import { readCachedScripture, writeCachedScripture, scriptureCacheKey } from "@/lib/scriptureCache";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { ShareVerse } from "@/components/ShareVerse";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -184,9 +186,6 @@ const ReadingPage = () => {
   const dayHighlights = getHighlightsForDay(dayNum);
 
   const [selectedReading, setSelectedReading] = useState(0);
-  const [scripture, setScripture] = useState<BibleApiResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [notesOpen, setNotesOpen] = useState(false);
   const [notesTab, setNotesTab] = useState<"draw" | "type" | "theology">("type");
   const [notesFullscreen, setNotesFullscreen] = useState(false);
@@ -217,6 +216,32 @@ const ReadingPage = () => {
 
   const currentReading = plan?.readings[selectedReading];
 
+  const {
+    data: scripture,
+    isLoading: loading,
+    error: queryError,
+    refetch,
+  } = useQuery<BibleApiResponse, Error>({
+    queryKey: ["scripture", currentReading?.reference, translationId],
+    queryFn: async () => {
+      if (!currentReading) throw new Error("No reading selected");
+      const key = scriptureCacheKey(currentReading.reference, translationId);
+      try {
+        const fresh = await fetchScripture(currentReading.reference, translationId);
+        writeCachedScripture(key, fresh);
+        return fresh;
+      } catch (err) {
+        // Fall back to last-successful scripture for this reference if the
+        // network is unavailable; otherwise surface the error.
+        const cached = readCachedScripture<BibleApiResponse>(key);
+        if (cached) return cached;
+        throw err;
+      }
+    },
+    enabled: !!currentReading,
+  });
+  const error = queryError ? queryError.message : null;
+
   const contextEntries = useMemo(() => {
     if (!scripture?.verses?.length) return [];
     const seen = new Set<string>();
@@ -246,15 +271,6 @@ const ReadingPage = () => {
     }
     return entries;
   }, [scripture]);
-
-  useEffect(() => {
-    if (!currentReading) return;
-    setLoading(true);
-    setError(null);
-    fetchScripture(currentReading.reference, translationId)
-      .then((data) => { setScripture(data); setLoading(false); })
-      .catch((err) => { setError(err.message); setLoading(false); });
-  }, [currentReading, translationId]);
 
   if (!plan) {
     return (
@@ -295,7 +311,15 @@ const ReadingPage = () => {
         {error && (
           <div className="rounded-xl bg-destructive/5 border border-destructive/20 p-6 text-center">
             <p className="text-destructive text-sm mb-2">Unable to load scripture</p>
-            <p className="text-muted-foreground text-xs">{error}</p>
+            <p className="text-muted-foreground text-xs mb-4">{error}</p>
+            <button
+              onClick={() => refetch()}
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-warm transition-all hover:shadow-warm-lg disabled:opacity-60"
+              disabled={loading}
+            >
+              <RefreshCw className={cn("h-3.5 w-3.5", loading && "animate-spin")} />
+              {loading ? "Retrying…" : "Retry"}
+            </button>
           </div>
         )}
 
