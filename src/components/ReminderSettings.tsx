@@ -1,4 +1,5 @@
 import { Bell, BellOff } from "lucide-react";
+import { toast as sonner } from "sonner";
 import { useReminders } from "@/hooks/useReminders";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +18,9 @@ export function ReminderSettings() {
     } else {
       const result = await enableReminders();
       if (result === "denied") {
-        alert("Please enable notifications in your browser settings to receive reminders.");
+        sonner.error(
+          "Please enable notifications in your browser settings to receive reminders."
+        );
       }
     }
   };
@@ -27,6 +30,8 @@ export function ReminderSettings() {
     const hour = h % 12 || 12;
     return `${hour}:${m.toString().padStart(2, "0")} ${period}`;
   };
+
+  const timeInputId = "reminder-time-input";
 
   return (
     <div className="rounded-xl border border-border bg-card p-5 shadow-warm">
@@ -55,6 +60,9 @@ export function ReminderSettings() {
         </div>
         <button
           onClick={handleToggle}
+          role="switch"
+          aria-checked={settings.enabled}
+          aria-label="Enable daily reading reminder"
           className={cn(
             "relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200",
             settings.enabled ? "bg-primary" : "bg-muted"
@@ -71,8 +79,11 @@ export function ReminderSettings() {
 
       {settings.enabled && (
         <div className="mt-4 flex items-center gap-2">
-          <label className="text-xs text-muted-foreground">Time:</label>
+          <label htmlFor={timeInputId} className="text-xs text-muted-foreground">
+            Time:
+          </label>
           <input
+            id={timeInputId}
             type="time"
             value={`${settings.hour.toString().padStart(2, "0")}:${settings.minute
               .toString()

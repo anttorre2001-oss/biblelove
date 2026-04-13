@@ -12,8 +12,14 @@ interface MiniCalendarProps {
 export function MiniCalendar({ currentDay, isDayComplete, onDaySelect, startDate }: MiniCalendarProps) {
   const [monthOffset, setMonthOffset] = useState(0);
 
-  const today = new Date();
-  const viewDate = new Date(today.getFullYear(), today.getMonth() + monthOffset, 1);
+  // `today` is stable per component instance; recomputing the grid on every
+  // render is both unnecessary and would flip the `isToday` flag at midnight
+  // without a state update anyway.
+  const today = useMemo(() => new Date(), []);
+  const viewDate = useMemo(
+    () => new Date(today.getFullYear(), today.getMonth() + monthOffset, 1),
+    [today, monthOffset]
+  );
   const monthName = viewDate.toLocaleString("en-US", { month: "long", year: "numeric" });
 
   const calendarDays = useMemo(() => {
@@ -41,7 +47,7 @@ export function MiniCalendar({ currentDay, isDayComplete, onDaySelect, startDate
     }
 
     return days;
-  }, [viewDate, startDate]);
+  }, [viewDate, startDate, today]);
 
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-warm">
@@ -61,36 +67,50 @@ export function MiniCalendar({ currentDay, isDayComplete, onDaySelect, startDate
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-0.5 text-center">
+      <div
+        role="grid"
+        aria-label={`Calendar for ${monthName}`}
+        className="grid grid-cols-7 gap-0.5 text-center"
+      >
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-          <span key={i} className="text-[10px] font-medium text-muted-foreground py-1">
+          <span
+            key={i}
+            role="columnheader"
+            className="text-[10px] font-medium text-muted-foreground py-1"
+          >
             {d}
           </span>
         ))}
         {calendarDays.map((d, i) => {
-          if (d.date === 0) return <span key={i} />;
+          if (d.date === 0) return <span key={i} role="gridcell" aria-hidden="true" />;
           const complete = d.readingDay ? isDayComplete(d.readingDay) : false;
           const isCurrent = d.readingDay === currentDay;
+          const dayLabel = d.readingDay
+            ? `Day ${d.date}, reading day ${d.readingDay}${complete ? ", complete" : ""}${d.isToday ? ", today" : ""}`
+            : `Day ${d.date}`;
 
           return (
-            <button
-              key={i}
-              onClick={() => d.readingDay && onDaySelect(d.readingDay)}
-              disabled={!d.readingDay}
-              className={cn(
-                "relative h-7 w-7 rounded-full text-[11px] font-medium transition-all mx-auto flex items-center justify-center",
-                complete && "bg-primary text-primary-foreground",
-                isCurrent && !complete && "ring-1 ring-primary text-primary",
-                d.isToday && !complete && !isCurrent && "bg-accent text-accent-foreground",
-                !complete && !isCurrent && !d.isToday && d.readingDay && "hover:bg-muted text-foreground",
-                !d.readingDay && "text-muted-foreground/30 cursor-default"
-              )}
-            >
-              <span>{d.date}</span>
-              {complete && (
-                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary-foreground" />
-              )}
-            </button>
+            <span key={i} role="gridcell">
+              <button
+                onClick={() => d.readingDay && onDaySelect(d.readingDay)}
+                disabled={!d.readingDay}
+                aria-label={dayLabel}
+                aria-current={d.isToday ? "date" : undefined}
+                className={cn(
+                  "relative h-7 w-7 rounded-full text-[11px] font-medium transition-all mx-auto flex items-center justify-center",
+                  complete && "bg-primary text-primary-foreground",
+                  isCurrent && !complete && "ring-1 ring-primary text-primary",
+                  d.isToday && !complete && !isCurrent && "bg-accent text-accent-foreground",
+                  !complete && !isCurrent && !d.isToday && d.readingDay && "hover:bg-muted text-foreground",
+                  !d.readingDay && "text-muted-foreground/30 cursor-default"
+                )}
+              >
+                <span>{d.date}</span>
+                {complete && (
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary-foreground" />
+                )}
+              </button>
+            </span>
           );
         })}
       </div>
