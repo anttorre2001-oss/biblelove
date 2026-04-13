@@ -44,7 +44,7 @@ const Index = () => {
   const { season, seasonLabel } = useSeasonalTheme();
   const { shouldShowNudge, markTodayAsRead } = useReminders();
   const { totalHighlights } = useHighlights();
-  const { bookmarks, totalBookmarks } = useBookmarks();
+  const { totalBookmarks } = useBookmarks();
   const [showSettings, setShowSettings] = useState(false);
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
 

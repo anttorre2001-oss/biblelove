@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { Bookmark, BookOpen, Trash2, ArrowLeft } from "lucide-react";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { cn } from "@/lib/utils";
 
 function groupByBook(bookmarks: ReturnType<typeof useBookmarks>["bookmarks"]) {
   const groups: Record<string, typeof bookmarks> = {};

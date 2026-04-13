@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Play, Pause, Square, SkipForward } from "lucide-react";
+import { Play, Pause, Square } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AudioPlayerProps {

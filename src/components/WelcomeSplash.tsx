@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { dailyVerses } from "@/data/readingPlan";
 import splashBg from "@/assets/splash-bg.jpg";
 
 const FIRST_VISIT_KEY = "bible-first-visit-done";
 
 export function WelcomeSplash() {
-  const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
 

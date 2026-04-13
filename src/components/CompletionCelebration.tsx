@@ -101,8 +101,15 @@ export function CompletionCelebration({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = 800;
-    canvas.height = 600;
+    // Render at the device's pixel ratio so the downloaded PNG is sharp
+    // on retina / high-DPI screens. We keep the drawing API in logical
+    // (800x600) coordinates by scaling the context.
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = 800 * dpr;
+    canvas.height = 600 * dpr;
+    canvas.style.width = "800px";
+    canvas.style.height = "600px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // Parchment background
     ctx.fillStyle = "#f5f0e8";

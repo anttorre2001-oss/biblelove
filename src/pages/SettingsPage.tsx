@@ -2,7 +2,6 @@ import { useTheme, themeProfiles, type ThemeProfile } from "@/hooks/useTheme";
 import { useTranslation, TRANSLATIONS } from "@/hooks/useTranslation";
 import { useReadingPreferences } from "@/hooks/useReadingPreferences";
 import { ReminderSettings } from "@/components/ReminderSettings";
-import { useReminders } from "@/hooks/useReminders";
 import { cn } from "@/lib/utils";
 import { Settings, Palette, Globe, Type, Bell, RotateCcw } from "lucide-react";
 
@@ -10,7 +9,6 @@ const SettingsPage = () => {
   const { theme, setTheme } = useTheme();
   const { translationId, setTranslationId } = useTranslation();
   const { prefs, updatePref, resetPrefs } = useReadingPreferences();
-  const reminders = useReminders();
 
   const themeColors: Record<ThemeProfile, { bg: string; accent: string; fg: string }> = {
     parchment: { bg: "bg-amber-50", accent: "bg-orange-500", fg: "text-amber-900" },

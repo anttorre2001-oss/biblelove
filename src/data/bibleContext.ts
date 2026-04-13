@@ -305,12 +305,26 @@ export const bibleContextData: BibleContextEntry[] = [
 ];
 
 /**
+ * Index bibleContextData by lowercase book name once at module load.
+ * Looking up `getContextForReading` is hit on every ReadingPage render,
+ * so filtering the full array on every call would be wasteful.
+ */
+const contextByBook: Map<string, BibleContextEntry[]> = (() => {
+  const map = new Map<string, BibleContextEntry[]>();
+  for (const entry of bibleContextData) {
+    const key = entry.book.toLowerCase();
+    const bucket = map.get(key);
+    if (bucket) bucket.push(entry);
+    else map.set(key, [entry]);
+  }
+  return map;
+})();
+
+/**
  * Get context entries relevant to the current reading
  */
 export function getContextForReading(bookName: string, chapter: number): BibleContextEntry[] {
-  return bibleContextData.filter((entry) => {
-    if (entry.book.toLowerCase() !== bookName.toLowerCase()) return false;
-    if (entry.chapters) return entry.chapters.includes(chapter);
-    return true;
-  });
+  const bucket = contextByBook.get(bookName.toLowerCase());
+  if (!bucket) return [];
+  return bucket.filter((entry) => (entry.chapters ? entry.chapters.includes(chapter) : true));
 }

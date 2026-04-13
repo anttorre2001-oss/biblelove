@@ -18,7 +18,9 @@ export function ShareVerse({ reference, text, className }: ShareVerseProps) {
       try {
         await navigator.share({ title: reference, text: formatted });
         return;
-      } catch {}
+      } catch {
+        // user cancelled or share unavailable — fall through to clipboard
+      }
     }
 
     await navigator.clipboard.writeText(formatted);

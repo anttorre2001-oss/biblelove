@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { Eraser, Undo2, Redo2, Trash2, Download, Pen, Highlighter, PenTool, Palette } from "lucide-react";
+import { Eraser, Undo2, Redo2, Trash2, Download, Pen, Highlighter, PenTool } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
@@ -45,15 +45,21 @@ export function HandwritingCanvas({ storageKey, className }: HandwritingCanvasPr
   const brush = BRUSH_CONFIGS[brushType];
 
   useEffect(() => {
-    const saved = localStorage.getItem(storageKey);
-    if (saved) {
-      try { setStrokes(JSON.parse(saved)); } catch {}
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) setStrokes(JSON.parse(saved));
+    } catch {
+      // corrupted / unavailable storage — start with empty canvas
     }
   }, [storageKey]);
 
   useEffect(() => {
     if (strokes.length > 0) {
-      localStorage.setItem(storageKey, JSON.stringify(strokes));
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(strokes));
+      } catch {
+        // ignore quota / privacy errors
+      }
     }
   }, [strokes, storageKey]);
 

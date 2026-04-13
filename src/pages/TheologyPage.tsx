@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { bookIntros, chapterTheology, type BookIntro, type ChapterTheology } from "@/data/theologyData";
 import { GraduationCap, BookOpen, ChevronRight, ArrowLeft, Cross, ScrollText, Lightbulb, Link2, HelpCircle, History } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const TheologyPage = () => {
-  const navigate = useNavigate();
   const [selectedBook, setSelectedBook] = useState<BookIntro | null>(null);
   const [selectedChapter, setSelectedChapter] = useState<ChapterTheology | null>(null);
 
