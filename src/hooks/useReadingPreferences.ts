@@ -18,7 +18,9 @@ function load(): ReadingPreferences {
   try {
     const stored = localStorage.getItem(PREFS_KEY);
     if (stored) return { ...defaults, ...JSON.parse(stored) };
-  } catch {}
+  } catch {
+    // corrupted / unavailable storage — fall back to defaults
+  }
   return defaults;
 }
 
@@ -26,7 +28,11 @@ export function useReadingPreferences() {
   const [prefs, setPrefs] = useState<ReadingPreferences>(load);
 
   useEffect(() => {
-    localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+    try {
+      localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [prefs]);
 
   const updatePref = <K extends keyof ReadingPreferences>(key: K, value: ReadingPreferences[K]) => {

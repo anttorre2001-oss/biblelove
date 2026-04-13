@@ -2,7 +2,21 @@ import { useState, useEffect } from "react";
 
 export type ThemeProfile = "parchment" | "midnight" | "forest" | "sepia" | "contrast";
 
+// Named color profile (parchment / midnight / etc). This is independent of
+// the light/dark toggle handled by ThemeToggle.tsx (`bible-theme` key).
 const THEME_KEY = "bible-theme-profile";
+
+const VALID_PROFILES: readonly ThemeProfile[] = [
+  "parchment",
+  "midnight",
+  "forest",
+  "sepia",
+  "contrast",
+];
+
+function isThemeProfile(value: unknown): value is ThemeProfile {
+  return typeof value === "string" && (VALID_PROFILES as readonly string[]).includes(value);
+}
 
 export const themeProfiles: Record<ThemeProfile, { label: string; description: string; emoji: string }> = {
   parchment: { label: "Parchment", description: "Warm cream & terracotta", emoji: "📜" },
@@ -15,14 +29,19 @@ export const themeProfiles: Record<ThemeProfile, { label: string; description: s
 export function useTheme() {
   const [theme, setTheme] = useState<ThemeProfile>(() => {
     try {
-      return (localStorage.getItem(THEME_KEY) as ThemeProfile) || "parchment";
+      const stored = localStorage.getItem(THEME_KEY);
+      return isThemeProfile(stored) ? stored : "parchment";
     } catch {
       return "parchment";
     }
   });
 
   useEffect(() => {
-    localStorage.setItem(THEME_KEY, theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // ignore quota / privacy errors
+    }
     const root = document.documentElement;
     // Remove all theme classes
     root.classList.remove("theme-parchment", "theme-midnight", "theme-forest", "theme-sepia", "theme-contrast");

@@ -14,7 +14,11 @@ export function useTextNotes(storageKey: string) {
   });
 
   useEffect(() => {
-    localStorage.setItem(fullKey, text);
+    try {
+      localStorage.setItem(fullKey, text);
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [text, fullKey]);
 
   const updateText = useCallback((newText: string) => {
@@ -23,7 +27,11 @@ export function useTextNotes(storageKey: string) {
 
   const clearText = useCallback(() => {
     setText("");
-    localStorage.removeItem(fullKey);
+    try {
+      localStorage.removeItem(fullKey);
+    } catch {
+      // ignore
+    }
   }, [fullKey]);
 
   return { text, updateText, clearText };

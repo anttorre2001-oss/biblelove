@@ -2,12 +2,18 @@ import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// Light/dark overlay toggle. This is independent of the named color
+// profile handled by useTheme.ts (`bible-theme-profile` key).
 const THEME_KEY = "bible-theme";
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(() => {
-    const stored = localStorage.getItem(THEME_KEY);
-    if (stored) return stored === "dark";
+    try {
+      const stored = localStorage.getItem(THEME_KEY);
+      if (stored) return stored === "dark";
+    } catch {
+      // fall through to system preference
+    }
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
@@ -21,7 +27,11 @@ export function ThemeToggle() {
       root.classList.remove("dark");
       body.classList.remove("dark");
     }
-    localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+    try {
+      localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [dark]);
 
   return (

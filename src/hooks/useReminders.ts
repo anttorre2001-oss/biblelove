@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 
 const REMINDER_KEY = "bible-reminder-settings";
 const LAST_READ_KEY = "bible-last-read-date";
@@ -12,19 +12,41 @@ interface ReminderSettings {
 function loadSettings(): ReminderSettings {
   try {
     const stored = localStorage.getItem(REMINDER_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
+    if (stored) {
+      const parsed = JSON.parse(stored) as Partial<ReminderSettings>;
+      return {
+        enabled: typeof parsed.enabled === "boolean" ? parsed.enabled : false,
+        hour: typeof parsed.hour === "number" ? parsed.hour : 8,
+        minute: typeof parsed.minute === "number" ? parsed.minute : 0,
+      };
+    }
+  } catch {
+    // fall through to default
+  }
   return { enabled: false, hour: 8, minute: 0 };
+}
+
+function loadLastRead(): string {
+  try {
+    return localStorage.getItem(LAST_READ_KEY) ?? "";
+  } catch {
+    return "";
+  }
 }
 
 export function useReminders() {
   const [settings, setSettings] = useState<ReminderSettings>(loadSettings);
+  const [lastReadDate, setLastReadDate] = useState<string>(loadLastRead);
   const [permission, setPermission] = useState<NotificationPermission>(
     typeof Notification !== "undefined" ? Notification.permission : "denied"
   );
 
   useEffect(() => {
-    localStorage.setItem(REMINDER_KEY, JSON.stringify(settings));
+    try {
+      localStorage.setItem(REMINDER_KEY, JSON.stringify(settings));
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [settings]);
 
   const requestPermission = useCallback(async () => {
@@ -51,15 +73,28 @@ export function useReminders() {
   }, []);
 
   const markTodayAsRead = useCallback(() => {
-    localStorage.setItem(LAST_READ_KEY, new Date().toDateString());
+    const today = new Date().toDateString();
+    try {
+      localStorage.setItem(LAST_READ_KEY, today);
+    } catch {
+      // ignore
+    }
+    setLastReadDate(today);
   }, []);
 
-  const hasReadToday = useCallback(() => {
-    return localStorage.getItem(LAST_READ_KEY) === new Date().toDateString();
-  }, []);
+  const hasReadToday = useMemo(
+    () => lastReadDate === new Date().toDateString(),
+    [lastReadDate]
+  );
 
-  // Check if we should show a gentle nudge
-  const shouldShowNudge = !hasReadToday();
+  const shouldShowNudge = !hasReadToday;
+
+  // Use a ref so the notification interval can read the latest "read today"
+  // status without re-subscribing on every change.
+  const lastReadRef = useRef(lastReadDate);
+  useEffect(() => {
+    lastReadRef.current = lastReadDate;
+  }, [lastReadDate]);
 
   // Schedule browser notification
   useEffect(() => {
@@ -70,7 +105,7 @@ export function useReminders() {
       if (
         now.getHours() === settings.hour &&
         now.getMinutes() === settings.minute &&
-        !hasReadToday()
+        lastReadRef.current !== now.toDateString()
       ) {
         new Notification("📖 Daily Bible Reading", {
           body: "Your reading is waiting for you. Take a peaceful moment with God's Word today.",
@@ -81,7 +116,7 @@ export function useReminders() {
 
     const interval = setInterval(checkAndNotify, 60000); // Check every minute
     return () => clearInterval(interval);
-  }, [settings, permission, hasReadToday]);
+  }, [settings, permission]);
 
   return {
     settings,
@@ -91,6 +126,6 @@ export function useReminders() {
     setReminderTime,
     markTodayAsRead,
     shouldShowNudge,
-    hasReadToday: hasReadToday(),
+    hasReadToday,
   };
 }

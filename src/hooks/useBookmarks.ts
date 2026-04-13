@@ -12,8 +12,13 @@ export interface Bookmark {
 function load(): Bookmark[] {
   try {
     const stored = localStorage.getItem(BOOKMARKS_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) return parsed as Bookmark[];
+    }
+  } catch {
+    // corrupted / unavailable storage — fall back to empty state
+  }
   return [];
 }
 
@@ -21,7 +26,11 @@ export function useBookmarks() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(load);
 
   useEffect(() => {
-    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+    try {
+      localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [bookmarks]);
 
   const addBookmark = useCallback((bm: Omit<Bookmark, "timestamp">) => {

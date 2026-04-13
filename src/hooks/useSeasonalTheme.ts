@@ -8,24 +8,78 @@ export type LiturgicalSeason =
   | "easter"
   | "ordinary";
 
-// Approximate liturgical season dates (simplified)
-function getLiturgicalSeason(date: Date): LiturgicalSeason {
-  const month = date.getMonth(); // 0-indexed
-  const day = date.getDate();
+/**
+ * Gregorian Easter Sunday (Meeus/Jones/Butcher algorithm).
+ * Returns the local-time Date for the given year.
+ */
+export function easterSunday(year: number): Date {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31); // 3=Mar, 4=Apr
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(year, month - 1, day);
+}
 
-  // Advent: ~Dec 1 – Dec 24
-  if (month === 11 && day <= 24) return "advent";
-  // Christmas: Dec 25 – Jan 5
-  if ((month === 11 && day >= 25) || (month === 0 && day <= 5)) return "christmas";
-  // Epiphany: Jan 6 – Feb (before Lent, simplified)
-  if (month === 0 && day >= 6) return "epiphany";
-  if (month === 1) return "epiphany";
-  // Lent: ~Mar 1 – Apr 15 (simplified)
-  if (month === 2 || (month === 3 && day <= 15)) return "lent";
-  // Easter: ~Apr 16 – Jun 8 (simplified)
-  if ((month === 3 && day >= 16) || month === 4 || (month === 5 && day <= 8))
-    return "easter";
-  // Ordinary Time: everything else
+function addDays(date: Date, days: number): Date {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+/**
+ * Advent Sunday = the Sunday nearest to (and on or after) Nov 27,
+ * or equivalently, the 4th Sunday before Dec 25.
+ */
+function adventSunday(year: number): Date {
+  const christmas = new Date(year, 11, 25);
+  const christmasDow = christmas.getDay(); // 0 = Sunday
+  // Advent 4 = Sunday on/before Christmas
+  const advent4 = addDays(christmas, -christmasDow);
+  return addDays(advent4, -21);
+}
+
+/**
+ * Classify a date into a liturgical season using the correct Easter
+ * calculation. Ranges (inclusive start, exclusive end unless noted):
+ *   Advent:    Advent Sunday .. Dec 24
+ *   Christmas: Dec 25 .. Jan 5
+ *   Epiphany:  Jan 6 .. Ash Wednesday (Easter - 46)
+ *   Lent:      Ash Wednesday .. Holy Saturday (Easter - 1)
+ *   Easter:    Easter Sunday .. Pentecost (Easter + 49)
+ *   Ordinary:  everything else
+ */
+export function getLiturgicalSeason(date: Date): LiturgicalSeason {
+  const year = date.getFullYear();
+  const time = date.getTime();
+
+  // Advent for *this* year (Nov/Dec) — if we're already past it, we've
+  // entered the Christmas season.
+  const advent = adventSunday(year);
+  const christmas = new Date(year, 11, 25);
+  if (time >= advent.getTime() && time < christmas.getTime()) return "advent";
+  if (time >= christmas.getTime()) return "christmas"; // Dec 25..31
+
+  // Jan 1..5 still counts as Christmastide.
+  const epiphany = new Date(year, 0, 6);
+  if (time < epiphany.getTime()) return "christmas";
+
+  const easter = easterSunday(year);
+  const ashWednesday = addDays(easter, -46);
+  const pentecost = addDays(easter, 49);
+
+  if (time < ashWednesday.getTime()) return "epiphany";
+  if (time < easter.getTime()) return "lent";
+  if (time < pentecost.getTime()) return "easter";
   return "ordinary";
 }
 

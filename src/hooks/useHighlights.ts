@@ -29,8 +29,13 @@ export const highlightColorValues: Record<HighlightColor, string> = {
 function loadHighlights(): Highlight[] {
   try {
     const stored = localStorage.getItem(HIGHLIGHTS_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) return parsed as Highlight[];
+    }
+  } catch {
+    // corrupted / unavailable storage — fall back to empty state
+  }
   return [];
 }
 
@@ -38,7 +43,11 @@ export function useHighlights() {
   const [highlights, setHighlights] = useState<Highlight[]>(loadHighlights);
 
   useEffect(() => {
-    localStorage.setItem(HIGHLIGHTS_KEY, JSON.stringify(highlights));
+    try {
+      localStorage.setItem(HIGHLIGHTS_KEY, JSON.stringify(highlights));
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [highlights]);
 
   const addHighlight = useCallback((highlight: Omit<Highlight, "timestamp">) => {

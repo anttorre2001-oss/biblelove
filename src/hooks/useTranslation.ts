@@ -25,17 +25,24 @@ export const TRANSLATIONS: BibleTranslation[] = [
 
 const TRANSLATION_KEY = "bible-translation";
 
+const VALID_TRANSLATION_IDS = new Set(TRANSLATIONS.map((t) => t.id));
+
 export function useTranslation() {
   const [translationId, setTranslationId] = useState(() => {
     try {
-      return localStorage.getItem(TRANSLATION_KEY) || "web";
+      const stored = localStorage.getItem(TRANSLATION_KEY);
+      return stored && VALID_TRANSLATION_IDS.has(stored) ? stored : "web";
     } catch {
       return "web";
     }
   });
 
   useEffect(() => {
-    localStorage.setItem(TRANSLATION_KEY, translationId);
+    try {
+      localStorage.setItem(TRANSLATION_KEY, translationId);
+    } catch {
+      // ignore quota / privacy errors
+    }
   }, [translationId]);
 
   const currentTranslation = TRANSLATIONS.find((t) => t.id === translationId) || TRANSLATIONS[0];

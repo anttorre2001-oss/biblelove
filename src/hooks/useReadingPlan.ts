@@ -20,18 +20,29 @@ function getStartDate(): Date {
 function loadState(): TrackerState {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
+    if (stored) {
+      const parsed = JSON.parse(stored) as Partial<TrackerState>;
+      if (parsed && typeof parsed.completedReadings === "object" && parsed.completedReadings !== null) {
+        return { completedReadings: parsed.completedReadings as Record<string, boolean> };
+      }
+    }
+  } catch {
+    // corrupted / unavailable storage — fall back to empty state
+  }
   return { completedReadings: {} };
 }
 
 function saveState(state: TrackerState) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // ignore quota / privacy errors
+  }
 }
 
 export function useReadingPlan() {
   const [state, setState] = useState<TrackerState>(loadState);
-  const startDate = getStartDate();
+  const [startDate] = useState<Date>(() => getStartDate());
 
   useEffect(() => {
     saveState(state);
