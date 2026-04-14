@@ -8,7 +8,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BottomNav } from "@/components/BottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ThemeProvider } from "@/hooks/useTheme";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index.tsx";
 import ReadingPage from "./pages/ReadingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
