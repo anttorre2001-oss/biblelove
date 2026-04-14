@@ -1,7 +1,9 @@
-import { Home, BookOpen, Search, Library } from "lucide-react";
+import { Home, BookOpen, Search, Library, GraduationCap, Settings } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useReadingPlan } from "@/hooks/useReadingPlan";
+import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
+import { Sun, Moon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,6 +20,8 @@ const navItems = [
   { path: "/read", icon: BookOpen, label: "Read" },
   { path: "/search", icon: Search, label: "Search" },
   { path: "/collection", icon: Library, label: "Collection" },
+  { path: "/theology", icon: GraduationCap, label: "Theology" },
+  { path: "/settings", icon: Settings, label: "Settings" },
 ];
 
 export function AppSidebar() {
@@ -26,6 +30,7 @@ export function AppSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { currentDay } = useReadingPlan();
+  const { isDark, toggleDark } = useTheme();
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/";
@@ -42,13 +47,13 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
-      <SidebarContent className="pt-4">
+      <SidebarContent className="pt-4 flex flex-col h-full">
         {!collapsed && (
           <div className="px-4 pb-4 border-b border-border mb-2">
             <h1 className="font-serif text-lg font-bold text-foreground">📖 Bible in a Year</h1>
           </div>
         )}
-        <SidebarGroup>
+        <SidebarGroup className="flex-1">
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => {
@@ -73,6 +78,17 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {/* Dark mode toggle at bottom */}
+        <div className="p-3 border-t border-border">
+          <button
+            onClick={toggleDark}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg w-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          >
+            {isDark ? <Moon className="h-5 w-5 flex-shrink-0" /> : <Sun className="h-5 w-5 flex-shrink-0" />}
+            {!collapsed && <span className="text-sm">{isDark ? "Dark Mode" : "Light Mode"}</span>}
+          </button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );
