@@ -62,7 +62,7 @@ export function ReminderSettings() {
         >
           <span
             className={cn(
-              "inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200",
+              "inline-block h-4 w-4 transform rounded-full bg-card shadow-sm transition-transform duration-200",
               settings.enabled ? "translate-x-6" : "translate-x-1"
             )}
           />
