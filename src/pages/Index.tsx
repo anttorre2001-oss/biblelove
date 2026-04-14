@@ -174,7 +174,7 @@ const Index = () => {
         {/* Daily Verse */}
         <section className="mb-8">
           <h2 className="font-serif text-xl font-semibold mb-4">✝️ Daily Verse</h2>
-          <DailyVerse day={currentDay} />
+          <DailyVerse />
         </section>
 
         {/* My Collection Card */}
