@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ChevronLeft, ChevronRight, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info, GraduationCap, Maximize2, Minimize2, RefreshCw } from "lucide-react";
+import { motion, type PanInfo } from "framer-motion";
+import { ArrowLeft, ChevronLeft, ChevronRight, Keyboard, Loader2, PanelRightOpen, PanelRightClose, Pencil, Type, Highlighter, X, Bookmark, BookmarkCheck, Settings2, MapPin, Clock, Info, GraduationCap, Maximize2, Minimize2, RefreshCw } from "lucide-react";
 import { readCachedScripture, writeCachedScripture, scriptureCacheKey } from "@/lib/scriptureCache";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { ShareVerse } from "@/components/ShareVerse";
@@ -11,14 +12,18 @@ import { useReadingPlan } from "@/hooks/useReadingPlan";
 import { useHighlights, type HighlightColor, highlightColorMap, highlightColorValues } from "@/hooks/useHighlights";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { useReadingPreferences } from "@/hooks/useReadingPreferences";
+import { useKeyboardShortcuts, type KeyboardShortcut } from "@/hooks/useKeyboardShortcuts";
 import { useTranslation } from "@/hooks/useTranslation";
 import { getContextForReading, type BibleContextEntry } from "@/data/bibleContext";
 import { getChapterTheology, type ChapterTheology } from "@/data/theologyData";
 import { HandwritingCanvas } from "@/components/HandwritingCanvas";
 import { TextNotes } from "@/components/TextNotes";
 import { JournalingPrompt } from "@/components/JournalingPrompt";
+import { KeyboardShortcutsHelp } from "@/components/KeyboardShortcutsHelp";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Slider } from "@/components/ui/slider";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 
 interface BibleVerse {
@@ -189,6 +194,98 @@ const ReadingPage = () => {
   const [notesOpen, setNotesOpen] = useState(false);
   const [notesTab, setNotesTab] = useState<"draw" | "type" | "theology">("type");
   const [notesFullscreen, setNotesFullscreen] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
+  const [canSwipe, setCanSwipe] = useState(false);
+
+  // Enable swipe gestures only on coarse-pointer (touch) devices so that
+  // desktop click-and-drag text selection is never misinterpreted as a swipe.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(pointer: coarse)");
+    const update = () => setCanSwipe(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+
+  const goToDay = useCallback(
+    (target: number) => {
+      const clamped = Math.min(365, Math.max(1, target));
+      if (clamped === dayNum) return;
+      navigate(`/read/${clamped}`);
+    },
+    [dayNum, navigate],
+  );
+
+  const handleSwipeEnd = useCallback(
+    (_: unknown, info: PanInfo) => {
+      const OFFSET = 80;
+      const VELOCITY = 400;
+      if (info.offset.x < -OFFSET || info.velocity.x < -VELOCITY) {
+        goToDay(dayNum + 1);
+      } else if (info.offset.x > OFFSET || info.velocity.x > VELOCITY) {
+        goToDay(dayNum - 1);
+      }
+    },
+    [dayNum, goToDay],
+  );
+
+  const closeAllOverlays = useCallback(() => {
+    setShowHelp(false);
+    setShowPrefs(false);
+    setHighlightMode(false);
+    setBookmarkMode(false);
+  }, []);
+
+  const shortcuts: KeyboardShortcut[] = [
+    {
+      key: "ArrowLeft",
+      handler: (e) => {
+        e.preventDefault();
+        goToDay(dayNum - 1);
+      },
+    },
+    {
+      key: "ArrowRight",
+      handler: (e) => {
+        e.preventDefault();
+        goToDay(dayNum + 1);
+      },
+    },
+    {
+      key: "b",
+      handler: () => {
+        setBookmarkMode((v) => !v);
+        setHighlightMode(false);
+      },
+    },
+    {
+      key: "h",
+      handler: () => {
+        setHighlightMode((v) => !v);
+        setBookmarkMode(false);
+      },
+    },
+    {
+      key: "p",
+      handler: () => setShowPrefs((v) => !v),
+    },
+    {
+      key: "n",
+      handler: () => setNotesOpen((v) => !v),
+    },
+    {
+      key: "Escape",
+      handler: closeAllOverlays,
+    },
+    {
+      key: "?",
+      shift: true,
+      handler: () => setShowHelp((v) => !v),
+    },
+  ];
+
+  useKeyboardShortcuts(shortcuts);
 
   const getVerseHighlight = (bookName: string, chapter: number, verse: number) => {
     const ref = `${bookName} ${chapter}:${verse}`;
@@ -282,7 +379,16 @@ const ReadingPage = () => {
 
   const scripturePanel = (
     <div className="flex-1 overflow-y-auto">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10 py-8">
+      <motion.div
+        key={`day-${dayNum}-${selectedReading}`}
+        className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10 py-8"
+        drag={canSwipe ? "x" : false}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.15}
+        dragSnapToOrigin
+        onDragEnd={handleSwipeEnd}
+        whileDrag={{ cursor: "grabbing" }}
+      >
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <h2 className="font-serif text-2xl font-bold mb-1">{currentReading?.reference}</h2>
@@ -377,7 +483,7 @@ const ReadingPage = () => {
             {isReadingComplete(dayNum, selectedReading) ? "✓ Completed" : "Mark as Read"}
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 
@@ -448,7 +554,15 @@ const ReadingPage = () => {
               <ChevronRight className="h-4 w-4" />
             </button>
             <ThemeToggle />
-            <button onClick={() => setShowPrefs(!showPrefs)} className={cn("h-8 w-8 rounded-lg flex items-center justify-center transition-colors", showPrefs ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground")} title="Reading preferences">
+            <button
+              onClick={() => setShowHelp(true)}
+              className="hidden sm:flex h-8 w-8 rounded-lg items-center justify-center hover:bg-muted text-muted-foreground transition-colors"
+              title="Keyboard shortcuts (press ?)"
+              aria-label="Show keyboard shortcuts"
+            >
+              <Keyboard className="h-4 w-4" />
+            </button>
+            <button onClick={() => setShowPrefs(!showPrefs)} className={cn("h-8 w-8 rounded-lg flex items-center justify-center transition-colors", showPrefs ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground")} title="Reading preferences (press p)">
               <Settings2 className="h-4 w-4" />
             </button>
             <button onClick={() => { setBookmarkMode(!bookmarkMode); setHighlightMode(false); }} className={cn("h-8 w-8 rounded-lg flex items-center justify-center transition-colors", bookmarkMode ? "bg-primary/10 text-primary" : "hover:bg-muted text-muted-foreground")} title="Bookmark mode">
@@ -467,24 +581,51 @@ const ReadingPage = () => {
       {/* Reading preferences bar */}
       {showPrefs && (
         <div className="sticky top-[57px] z-20 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-3">
-          <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-muted-foreground font-medium whitespace-nowrap">Size</label>
-              <input type="range" min={14} max={28} step={1} value={prefs.fontSize} onChange={(e) => updatePref("fontSize", Number(e.target.value))} className="w-20 accent-primary" />
-              <span className="text-xs text-muted-foreground w-6">{prefs.fontSize}</span>
+          <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-5">
+            <div className="flex items-center gap-3 min-w-[180px]">
+              <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Size</span>
+              <Slider
+                aria-label="Font size"
+                min={14}
+                max={28}
+                step={1}
+                value={[prefs.fontSize]}
+                onValueChange={([v]) => updatePref("fontSize", v)}
+                className="w-24"
+              />
+              <span className="text-xs text-muted-foreground tabular-nums w-8">{prefs.fontSize}px</span>
             </div>
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-muted-foreground font-medium whitespace-nowrap">Spacing</label>
-              <input type="range" min={1.4} max={2.6} step={0.1} value={prefs.lineHeight} onChange={(e) => updatePref("lineHeight", Number(e.target.value))} className="w-20 accent-primary" />
+            <div className="flex items-center gap-3 min-w-[180px]">
+              <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Spacing</span>
+              <Slider
+                aria-label="Line spacing"
+                min={1.4}
+                max={2.6}
+                step={0.1}
+                value={[prefs.lineHeight]}
+                onValueChange={([v]) => updatePref("lineHeight", Number(v.toFixed(1)))}
+                className="w-24"
+              />
+              <span className="text-xs text-muted-foreground tabular-nums w-8">{prefs.lineHeight.toFixed(1)}</span>
             </div>
-            <div className="flex items-center gap-1">
-              {(["serif", "sans", "mono"] as const).map((f) => (
-                <button key={f} onClick={() => updatePref("fontFamily", f)} className={cn("px-2.5 py-1 rounded text-xs font-medium transition-colors", prefs.fontFamily === f ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground", f === "serif" && "font-serif", f === "sans" && "font-sans", f === "mono" && "font-mono")}>
-                  {f === "serif" ? "Serif" : f === "sans" ? "Sans" : "Mono"}
-                </button>
-              ))}
-            </div>
-            <button onClick={() => setShowPrefs(false)} className="ml-auto text-muted-foreground hover:text-foreground">
+            <ToggleGroup
+              type="single"
+              value={prefs.fontFamily}
+              onValueChange={(v) => {
+                if (v === "serif" || v === "sans" || v === "mono") updatePref("fontFamily", v);
+              }}
+              className="gap-1"
+              aria-label="Font family"
+            >
+              <ToggleGroupItem value="serif" size="sm" className="font-serif h-7 px-2.5 text-xs">Serif</ToggleGroupItem>
+              <ToggleGroupItem value="sans" size="sm" className="font-sans h-7 px-2.5 text-xs">Sans</ToggleGroupItem>
+              <ToggleGroupItem value="mono" size="sm" className="font-mono h-7 px-2.5 text-xs">Mono</ToggleGroupItem>
+            </ToggleGroup>
+            <button
+              onClick={() => setShowPrefs(false)}
+              className="ml-auto text-muted-foreground hover:text-foreground"
+              aria-label="Close preferences"
+            >
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -557,6 +698,7 @@ const ReadingPage = () => {
           scripturePanel
         )}
       </div>
+      <KeyboardShortcutsHelp open={showHelp} onOpenChange={setShowHelp} />
     </div>
   );
 };
