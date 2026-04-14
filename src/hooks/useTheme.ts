@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 
 export type ThemeProfile = "parchment" | "midnight" | "forest" | "sepia" | "contrast";
 
@@ -13,6 +13,14 @@ export const themeProfiles: Record<ThemeProfile, { label: string; description: s
   contrast: { label: "High Contrast", description: "Sharp black & white", emoji: "⚡" },
 };
 
+function getInitialTheme(): ThemeProfile {
+  try {
+    return (localStorage.getItem(THEME_KEY) as ThemeProfile) || "parchment";
+  } catch {
+    return "parchment";
+  }
+}
+
 function getInitialDark(): boolean {
   try {
     const stored = localStorage.getItem(DARK_KEY);
@@ -23,34 +31,57 @@ function getInitialDark(): boolean {
   }
 }
 
-export function useTheme() {
-  const [theme, setTheme] = useState<ThemeProfile>(() => {
-    try {
-      return (localStorage.getItem(THEME_KEY) as ThemeProfile) || "parchment";
-    } catch {
-      return "parchment";
-    }
-  });
+function applyThemeToDOM(t: ThemeProfile, dark: boolean) {
+  const root = document.documentElement;
+  root.classList.remove("theme-parchment", "theme-midnight", "theme-forest", "theme-sepia", "theme-contrast", "dark");
+  root.classList.add(`theme-${t}`);
+  if (dark) root.classList.add("dark");
+}
 
-  const [isDark, setIsDark] = useState(getInitialDark);
+interface ThemeContextValue {
+  theme: ThemeProfile;
+  setTheme: (t: ThemeProfile) => void;
+  isDark: boolean;
+  setIsDark: (d: boolean) => void;
+  toggleDark: () => void;
+  profiles: typeof themeProfiles;
+}
 
-  const applyTheme = useCallback((t: ThemeProfile, dark: boolean) => {
-    const root = document.documentElement;
-    // Remove all theme classes
-    root.classList.remove("theme-parchment", "theme-midnight", "theme-forest", "theme-sepia", "theme-contrast", "dark");
-    root.classList.add(`theme-${t}`);
-    if (dark) {
-      root.classList.add("dark");
-    }
+export const ThemeContext = createContext<ThemeContextValue | null>(null);
+
+export function useThemeState() {
+  const [theme, setThemeState] = useState<ThemeProfile>(getInitialTheme);
+  const [isDark, setIsDarkState] = useState(getInitialDark);
+
+  const setTheme = useCallback((t: ThemeProfile) => {
+    setThemeState(t);
+    localStorage.setItem(THEME_KEY, t);
+  }, []);
+
+  const setIsDark = useCallback((d: boolean) => {
+    setIsDarkState(d);
+    localStorage.setItem(DARK_KEY, String(d));
+  }, []);
+
+  const toggleDark = useCallback(() => {
+    setIsDarkState((prev) => {
+      const next = !prev;
+      localStorage.setItem(DARK_KEY, String(next));
+      return next;
+    });
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(THEME_KEY, theme);
-    localStorage.setItem(DARK_KEY, String(isDark));
-    applyTheme(theme, isDark);
-  }, [theme, isDark, applyTheme]);
-
-  const toggleDark = useCallback(() => setIsDark((d) => !d), []);
+    applyThemeToDOM(theme, isDark);
+  }, [theme, isDark]);
 
   return { theme, setTheme, isDark, setIsDark, toggleDark, profiles: themeProfiles };
+}
+
+export function useTheme() {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return ctx;
 }

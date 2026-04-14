@@ -8,7 +8,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { BottomNav } from "@/components/BottomNav";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useTheme } from "@/hooks/useTheme";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index.tsx";
 import ReadingPage from "./pages/ReadingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
@@ -63,8 +63,6 @@ function AnimatedRoutes() {
 
 function AppLayout() {
   const isMobile = useIsMobile();
-  // Initialize theme on mount
-  useTheme();
 
   if (isMobile) {
     return (
@@ -94,13 +92,15 @@ function AppLayout() {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AppLayout />
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AppLayout />
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
