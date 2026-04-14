@@ -75,7 +75,7 @@ const fontFamilyMap = {
 
 const ContextPopup = ({ entry }: { entry: BibleContextEntry }) => {
   const icon = entry.type === "map" ? <MapPin className="h-4 w-4" /> : entry.type === "timeline" ? <Clock className="h-4 w-4" /> : <Info className="h-4 w-4" />;
-  const bgColor = entry.type === "map" ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400" : entry.type === "timeline" ? "bg-amber-500/10 text-amber-700 dark:text-amber-400" : "bg-sky-500/10 text-sky-700 dark:text-sky-400";
+  const bgColor = "bg-primary/10 text-primary";
 
   return (
     <Popover>
@@ -402,7 +402,7 @@ const ReadingPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background flex flex-col lg:pt-14">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Top bar */}
       <header className="sticky top-0 z-30 bg-card/95 backdrop-blur-sm border-b border-border px-4 py-3">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
