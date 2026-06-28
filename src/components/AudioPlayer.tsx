@@ -13,7 +13,9 @@ export function AudioPlayer({ text, className }: AudioPlayerProps) {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const stop = useCallback(() => {
-    window.speechSynthesis.cancel();
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
     setPlaying(false);
     setPaused(false);
     utteranceRef.current = null;
