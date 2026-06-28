@@ -13,13 +13,16 @@ export function AudioPlayer({ text, className }: AudioPlayerProps) {
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   const stop = useCallback(() => {
-    window.speechSynthesis.cancel();
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
     setPlaying(false);
     setPaused(false);
     utteranceRef.current = null;
   }, []);
 
   const play = useCallback(() => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
     if (paused) {
       window.speechSynthesis.resume();
       setPaused(false);
@@ -46,13 +49,16 @@ export function AudioPlayer({ text, className }: AudioPlayerProps) {
   }, [text, paused, stop]);
 
   const pause = useCallback(() => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
     window.speechSynthesis.pause();
     setPaused(true);
   }, []);
 
   useEffect(() => {
     return () => {
-      window.speechSynthesis.cancel();
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
     };
   }, []);
 
