@@ -765,7 +765,559 @@ export const chapterTheology: ChapterTheology[] = [
     historicalContext: "Written to persecuted Christians on the verge of despair, Revelation 21 is the Bible's ultimate answer to suffering. It doesn't minimize pain but promises that 'the old order of things has passed away' and God makes 'everything new.'",
     applicationQuestions: ["How does the promise of 'no more death or crying' shape how you face grief today?", "What does it mean that God's plan ends not in escape from earth but in renewed creation?", "How does the vision of the New Jerusalem give you hope in a broken world?"],
   },
+  // GENESIS 12 — ABRAHAMIC COVENANT
+  {
+    book: "Genesis", chapter: 12, title: "The Call of Abram: A Blessing for All Nations",
+    summary: "God calls Abram out of Ur with a sevenfold promise: land, descendants, blessing, a great name, and that through him all the families of the earth will be blessed. This is the seed of redemptive history.",
+    keyThemes: ["Divine call", "Faith as obedience", "Covenant of grace", "Global mission"],
+    theologicalConcepts: [
+      { term: "Abrahamic Covenant", definition: "An unconditional covenant of grace promising land, seed, and blessing — the spine of the entire biblical story, fulfilled in Christ and the church.", relatedVerses: ["Genesis 12:1-3", "Genesis 15:6", "Galatians 3:8-9,16", "Romans 4:13"] },
+      { term: "Justifying Faith", definition: "Abram believed God and 'it was credited to him as righteousness' — Paul's foundational text for justification by faith alone.", relatedVerses: ["Genesis 15:6", "Romans 4:3", "Galatians 3:6", "James 2:23"] },
+      { term: "Missio Dei", definition: "God's mission is global from the start: 'in you all the families of the earth shall be blessed.' Israel exists for the nations.", relatedVerses: ["Genesis 12:3", "Isaiah 49:6", "Matthew 28:19", "Acts 3:25"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 11:8-10", connection: "By faith Abraham obeyed, going out not knowing where he was going" },
+      { reference: "Galatians 3:7-9", connection: "Those of faith are the sons of Abraham; the gospel was preached to him" },
+      { reference: "Acts 7:2-5", connection: "Stephen recounts Abram's call as foundational to Israel's story" },
+    ],
+    historicalContext: "Ur of the Chaldeans was a sophisticated Sumerian city with advanced architecture and polytheistic worship. Abram leaves civilization for tents — trading visible security for invisible promise. The call comes with no map, only a Person.",
+    applicationQuestions: ["What 'Ur' is God calling you to leave?", "How does living for the blessing of others reshape your goals?", "Where does faith require you to move before you see?"],
+  },
+  // GENESIS 22 — THE AKEDAH
+  {
+    book: "Genesis", chapter: 22, title: "The Binding of Isaac: God Will Provide",
+    summary: "God tests Abraham by commanding him to sacrifice Isaac, the son of promise. Abraham obeys, knife raised — and God provides a ram in Isaac's place, declaring 'On the mount of the LORD it shall be provided.'",
+    keyThemes: ["Tested faith", "Substitutionary sacrifice", "Resurrection hope", "The Lord provides"],
+    theologicalConcepts: [
+      { term: "Jehovah-Jireh", definition: "'The LORD will provide.' Abraham names the place after God's character — not just provider of a ram but the One who ultimately provides Himself as the sacrifice.", relatedVerses: ["Genesis 22:8,14", "John 1:29", "Romans 8:32"] },
+      { term: "Faith Unto Resurrection", definition: "Hebrews reveals Abraham's logic: he believed God could raise Isaac from the dead, since the promise ran through Isaac. He received him back 'figuratively' from death.", relatedVerses: ["Hebrews 11:17-19", "Romans 4:17-21"] },
+      { term: "Type of the Father and Son", definition: "A father offers his only beloved son, who carries the wood of his own sacrifice up the same mountain region (Moriah) where Christ would die. The Father did not spare His Son.", relatedVerses: ["Genesis 22:2,6", "John 19:17", "Romans 8:32", "2 Chronicles 3:1"] },
+    ],
+    crossReferences: [
+      { reference: "John 8:56", connection: "'Abraham rejoiced to see my day' — the Akedah revealed Christ to Abraham" },
+      { reference: "James 2:21-23", connection: "Abraham's faith was completed by his works on Moriah" },
+      { reference: "Hebrews 11:17-19", connection: "By faith Abraham, when tested, offered up Isaac" },
+    ],
+    historicalContext: "Child sacrifice was practiced by surrounding Canaanite religions (Molech). God's command tests Abraham within that cultural horror — then forever forbids it by providing a substitute. Moriah is later identified as the temple mount (2 Chr 3:1) — the very region of Calvary.",
+    applicationQuestions: ["What 'Isaac' is God asking you to hold open-handedly?", "How does Abraham's confidence in resurrection shape obedience today?", "Where do you need to trust that 'the Lord will provide'?"],
+  },
+  // EXODUS 20 — TEN COMMANDMENTS
+  {
+    book: "Exodus", chapter: 20, title: "The Ten Commandments: Covenant Charter at Sinai",
+    summary: "Amid thunder, fire, and smoke, God speaks the Ten Words from Sinai — the moral foundation of the covenant, beginning with His self-disclosure as the Redeemer who brought Israel out of Egypt.",
+    keyThemes: ["God's holy character", "Love of God and neighbor", "Grace before law", "Moral absolutes"],
+    theologicalConcepts: [
+      { term: "Indicative Before Imperative", definition: "The Decalogue opens with grace: 'I am the LORD your God, who brought you out of Egypt.' Obedience flows from redemption already accomplished, not the other way around.", relatedVerses: ["Exodus 20:2", "Deuteronomy 5:6", "Romans 12:1", "1 John 4:19"] },
+      { term: "Two Tables of the Law", definition: "Commands 1-4 govern love of God; commands 5-10 govern love of neighbor. Jesus summarizes both: love God and love neighbor.", relatedVerses: ["Matthew 22:37-40", "Romans 13:8-10", "Galatians 5:14"] },
+      { term: "The Sabbath", definition: "Resting on the seventh day imitates God's creation rest and anticipates eternal rest in Christ. It declares humans are not what they produce.", relatedVerses: ["Exodus 20:8-11", "Genesis 2:2-3", "Hebrews 4:9-11", "Matthew 11:28-30"] },
+    ],
+    crossReferences: [
+      { reference: "Matthew 5:17-48", connection: "Jesus internalizes and fulfills each commandment" },
+      { reference: "Romans 7:7-12", connection: "The law is holy, righteous, and good — it reveals sin" },
+      { reference: "James 2:10-11", connection: "Breaking one commandment makes one a lawbreaker of the whole" },
+    ],
+    historicalContext: "Suzerain-vassal treaties of the ANE followed a fixed pattern: identification of the great king, historical prologue of his kindness, stipulations, blessings/curses, witnesses. Exodus 20 mirrors this form — God is the Great King, Israel His covenant people.",
+    applicationQuestions: ["Which commandment most exposes your need for grace?", "How does the order — redemption first, obedience second — shape your daily walk?", "What would Sabbath-keeping look like in your week?"],
+  },
+  // LEVITICUS 16 — DAY OF ATONEMENT
+  {
+    book: "Leviticus", chapter: 16, title: "Day of Atonement: The Heart of Leviticus",
+    summary: "Once a year, the high priest enters the Most Holy Place with blood for himself and the people, and lays Israel's sins on the scapegoat that bears them away into the wilderness. The clearest OT picture of substitutionary atonement.",
+    keyThemes: ["Atonement", "Cleansing", "Substitution", "Access to God"],
+    theologicalConcepts: [
+      { term: "Kippur (Atonement)", definition: "To 'cover' or 'wipe away' sin. The blood-sprinkled mercy seat became the place where God's wrath was propitiated and sin removed.", relatedVerses: ["Leviticus 16:14-16", "Romans 3:25", "Hebrews 9:11-14"] },
+      { term: "The Two Goats", definition: "One goat is sacrificed (penalty paid); the other is sent away bearing sin (guilt removed). Both pictures meet in Christ — He pays the penalty AND removes the guilt.", relatedVerses: ["Leviticus 16:7-10,21-22", "Isaiah 53:6", "John 1:29", "Hebrews 13:11-12"] },
+      { term: "High Priestly Mediation", definition: "Only the high priest could enter the Holy of Holies, once a year, with blood. Christ enters the true heavenly sanctuary once for all with His own blood.", relatedVerses: ["Hebrews 9:7,12,24-26", "Hebrews 10:19-22"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 9-10", connection: "Christ as the better and final High Priest and sacrifice" },
+      { reference: "Matthew 27:51", connection: "The temple curtain tears — access opened by Christ's death" },
+      { reference: "1 John 2:2", connection: "Christ is the propitiation for our sins" },
+    ],
+    historicalContext: "Yom Kippur was Israel's most solemn day — fasting, repentance, and the most intense ritual of the year. After AD 70 the temple was destroyed; Judaism still observes Yom Kippur but without sacrifice. Hebrews argues this is no loss because the true atonement has come.",
+    applicationQuestions: ["How does knowing your sins were carried away affect your shame?", "Why is it good news that Christ is both sacrifice and priest?", "What does it mean that you can now 'draw near with confidence'?"],
+  },
+  // DEUTERONOMY 6 — THE SHEMA
+  {
+    book: "Deuteronomy", chapter: 6, title: "The Shema: Love the LORD with All Your Heart",
+    summary: "Moses gives Israel its central confession: 'Hear, O Israel: the LORD our God, the LORD is one.' Love for God is to saturate every sphere — heart, household, conversation, doorposts.",
+    keyThemes: ["Monotheism", "Wholehearted love", "Generational discipleship", "Daily devotion"],
+    theologicalConcepts: [
+      { term: "Monotheism", definition: "'The LORD is one' declares God's exclusive deity and inner unity — a confession that distinguishes Israel from all surrounding polytheism.", relatedVerses: ["Deuteronomy 6:4", "Isaiah 45:5-6", "Mark 12:29-30", "1 Corinthians 8:6"] },
+      { term: "The Greatest Commandment", definition: "Jesus identifies the Shema as the greatest commandment. All law and prophets hang on love of God and love of neighbor.", relatedVerses: ["Matthew 22:37-40", "Mark 12:28-31", "Romans 13:8-10"] },
+      { term: "Catechesis", definition: "Faith is passed down by daily, embedded conversation — 'when you sit, walk, lie down, rise.' Discipleship is intergenerational and ordinary.", relatedVerses: ["Deuteronomy 6:6-9,20-25", "Psalm 78:4-7", "Ephesians 6:4"] },
+    ],
+    crossReferences: [
+      { reference: "Mark 12:28-34", connection: "Jesus affirms the Shema as the greatest commandment" },
+      { reference: "Matthew 4:7,10", connection: "Jesus quotes Deuteronomy 6 to resist Satan" },
+      { reference: "James 2:19", connection: "Even demons confess monotheism — true faith goes further into love" },
+    ],
+    historicalContext: "Devout Jews recite the Shema morning and evening, bind it in tefillin, and post it in mezuzot on doorframes. It is the heartbeat of Jewish identity — and Jesus stands fully inside this tradition while making Himself the One in whom God's oneness meets us.",
+    applicationQuestions: ["What competes for the love of your whole heart?", "How does your household conversation form faith — or fail to?", "What 'doorposts' need fresh reminders of God's word?"],
+  },
+  // JOSHUA 1 — BE STRONG AND COURAGEOUS
+  {
+    book: "Joshua", chapter: 1, title: "Be Strong and Courageous: Leadership Transferred",
+    summary: "After Moses' death, God commissions Joshua to lead Israel across the Jordan. Three times He commands courage, grounding it in His promised presence and the meditation of His word.",
+    keyThemes: ["God's presence", "Courage from promise", "Meditating on Scripture", "New leadership"],
+    theologicalConcepts: [
+      { term: "Presence-Based Courage", definition: "Courage is not self-generated grit but rests on the promise 'I will be with you.' Biblical bravery is faith in the present God.", relatedVerses: ["Joshua 1:5,9", "Deuteronomy 31:6", "Matthew 28:20", "Hebrews 13:5-6"] },
+      { term: "Meditation on Scripture", definition: "Joshua is told to meditate on the Book of the Law day and night. Prosperity and success are tied to formation by God's word.", relatedVerses: ["Joshua 1:8", "Psalm 1:2-3", "2 Timothy 3:16-17"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 4:8-10", connection: "Joshua gave a partial rest; Jesus gives the true Sabbath rest" },
+      { reference: "Matthew 28:18-20", connection: "The greater Joshua (Jesus) commissions His people with His presence" },
+    ],
+    historicalContext: "Joshua's name (Yehoshua) means 'Yahweh saves' — the same name as Jesus. He stands at the Jordan, the boundary between wilderness and inheritance, a perennial picture of God's people crossing into promise by faith.",
+    applicationQuestions: ["Where is fear keeping you from obedience?", "What does daily meditation on Scripture look like for you?", "How does God's presence reshape what 'success' means?"],
+  },
+  // 1 SAMUEL 17 — DAVID AND GOLIATH
+  {
+    book: "1 Samuel", chapter: 17, title: "David and Goliath: The Battle Belongs to the LORD",
+    summary: "A young shepherd faces a nine-foot champion not because he is brave but because he is jealous for God's name. With sling and stone, David declares: 'The battle is the LORD's.'",
+    keyThemes: ["God's honor", "Faith over fear", "Unlikely deliverer", "Representative combat"],
+    theologicalConcepts: [
+      { term: "Representative Victory", definition: "Goliath fights as Philistia's champion; David as Israel's. Their single combat decides the whole battle — a picture of Christ defeating sin and death on our behalf.", relatedVerses: ["1 Samuel 17:8-9", "Romans 5:18-19", "Hebrews 2:14-15", "1 Corinthians 15:54-57"] },
+      { term: "Zeal for God's Name", definition: "David's anger is not personal but theological — Goliath defies 'the armies of the living God.' True courage is fueled by jealousy for God's glory.", relatedVerses: ["1 Samuel 17:26,36,45-47", "Psalm 69:9", "John 2:17"] },
+    ],
+    crossReferences: [
+      { reference: "2 Corinthians 10:3-5", connection: "Our weapons are not of the flesh but mighty through God" },
+      { reference: "Ephesians 6:10-17", connection: "Standing against the giants of the spiritual realm" },
+      { reference: "1 John 5:4", connection: "This is the victory that overcomes the world — our faith" },
+    ],
+    historicalContext: "Philistine champions wore bronze armor and used iron weapons — military technology Israel largely lacked. David's refusal of Saul's armor and his choice of shepherd's tools dramatize that the battle is won by God, not gear.",
+    applicationQuestions: ["What 'giants' loom in your life?", "How does jealousy for God's name reorder your fears?", "Where might God use your ordinary tools for extraordinary victory?"],
+  },
+  // 2 SAMUEL 7 — DAVIDIC COVENANT
+  {
+    book: "2 Samuel", chapter: 7, title: "The Davidic Covenant: A House and a Throne Forever",
+    summary: "David wants to build God a house; God instead promises to build David a house — a dynasty whose throne will endure forever through a Son God will call His own.",
+    keyThemes: ["Covenant fidelity", "Eternal kingdom", "Messianic promise", "Grace exceeds plans"],
+    theologicalConcepts: [
+      { term: "Davidic Covenant", definition: "God promises David an offspring whose throne will be established forever. This unconditional promise becomes the backbone of messianic hope.", relatedVerses: ["2 Samuel 7:12-16", "Psalm 89:3-4", "Luke 1:32-33", "Acts 2:30"] },
+      { term: "Son of David", definition: "Jesus is repeatedly called 'Son of David' — the rightful heir of the eternal throne, confirmed by His resurrection.", relatedVerses: ["Matthew 1:1", "Matthew 21:9", "Romans 1:3-4", "Revelation 22:16"] },
+    ],
+    crossReferences: [
+      { reference: "Luke 1:32-33", connection: "Gabriel tells Mary that Jesus will receive 'the throne of his father David'" },
+      { reference: "Acts 2:29-36", connection: "Peter argues from this covenant that Jesus' resurrection enthrones Him" },
+      { reference: "Hebrews 1:5", connection: "God's words to David's Son ultimately speak of Christ" },
+    ],
+    historicalContext: "Surrounding ANE kings claimed divine sonship as propaganda. Here, Israel's God Himself initiates the relationship — and the promise survives every failure of David's actual dynasty, awaiting fulfillment in Christ.",
+    applicationQuestions: ["Where are you trying to build for God what He wants to build for you?", "How does Jesus' eternal throne anchor your present anxieties?", "What promises of God need to reframe your prayers?"],
+  },
+  // 1 KINGS 18 — ELIJAH ON CARMEL
+  {
+    book: "1 Kings", chapter: 18, title: "Elijah on Mount Carmel: The LORD, He Is God",
+    summary: "Elijah confronts 450 prophets of Baal with a single challenge: the God who answers by fire is God. After Baal's silence, Yahweh's fire consumes the soaked sacrifice — and Israel falls on their faces.",
+    keyThemes: ["Exclusive worship", "Idolatry confronted", "Prayer and power", "Covenant repentance"],
+    theologicalConcepts: [
+      { term: "Idolatry and Syncretism", definition: "Israel had not abandoned Yahweh outright but mixed Him with Baal worship. Elijah calls them to undivided allegiance: 'How long will you halt between two opinions?'", relatedVerses: ["1 Kings 18:21", "Exodus 20:3", "Matthew 6:24", "1 John 5:21"] },
+      { term: "Effective Prayer", definition: "Elijah's prayer is simple, brief, and God-centered — and brings down fire. James cites him as proof that 'the effective prayer of a righteous man avails much.'", relatedVerses: ["1 Kings 18:36-38", "James 5:16-18"] },
+    ],
+    crossReferences: [
+      { reference: "Malachi 4:5-6", connection: "Elijah will come before the great day of the LORD" },
+      { reference: "Matthew 17:1-13", connection: "Elijah appears with Moses at the Transfiguration; John the Baptist comes in Elijah's spirit" },
+      { reference: "Romans 11:2-5", connection: "God preserved 7,000 who had not bowed to Baal — a remnant by grace" },
+    ],
+    historicalContext: "Baal was the Canaanite storm-and-fertility god; Mount Carmel was associated with his worship. By having Yahweh answer by fire — Baal's supposed specialty — Elijah dismantles the rival on his own turf.",
+    applicationQuestions: ["What rival 'Baals' divide your loyalty?", "How does Elijah's bold simplicity reshape your prayers?", "Where does God call you to public, costly clarity?"],
+  },
+  // PSALM 1 — TWO WAYS
+  {
+    book: "Psalms", chapter: 1, title: "The Two Ways: Blessed Is the One",
+    summary: "The Psalter opens with a portrait of two lives — one rooted by streams of God's word and flourishing, the other like chaff blown away. The whole Psalter teaches us how to be the tree.",
+    keyThemes: ["Delight in Scripture", "Two destinies", "Wisdom and folly", "Rooted flourishing"],
+    theologicalConcepts: [
+      { term: "Torah Delight", definition: "Blessedness flows from loving and meditating on God's instruction. Scripture is not burden but feast.", relatedVerses: ["Psalm 1:2", "Psalm 19:7-11", "Psalm 119:97", "Jeremiah 15:16"] },
+      { term: "Two Ways", definition: "Wisdom literature consistently sets two paths before us: the way of the righteous and the way of the wicked. Choice is unavoidable.", relatedVerses: ["Psalm 1:6", "Deuteronomy 30:15-20", "Matthew 7:13-14", "Proverbs 4:18-19"] },
+    ],
+    crossReferences: [
+      { reference: "Jeremiah 17:7-8", connection: "Nearly identical 'tree by water' image for the one who trusts in the LORD" },
+      { reference: "John 15:1-8", connection: "Abiding in Christ as the source of fruitful life" },
+    ],
+    historicalContext: "Psalm 1 functions as the gateway to the Psalter — instructing readers that the prayers and songs to follow are intended to form delighted, rooted people of the Word.",
+    applicationQuestions: ["What are you 'planted by' — what feeds your roots?", "How would your week change if delight, not duty, drove your time in Scripture?", "Which 'way' is winning in your daily choices?"],
+  },
+  // PSALM 22 — FORSAKEN MESSIAH
+  {
+    book: "Psalms", chapter: 22, title: "My God, My God, Why Have You Forsaken Me?",
+    summary: "David's cry of dereliction becomes Christ's. The psalm moves from forsakenness to vindication, ending in worldwide worship — a prophetic script for the cross and resurrection.",
+    keyThemes: ["Forsakenness", "Vicarious suffering", "Vindication", "Global praise"],
+    theologicalConcepts: [
+      { term: "Cry of Dereliction", definition: "Jesus quotes verse 1 from the cross — not despair, but invoking the whole psalm that moves through suffering to triumph.", relatedVerses: ["Psalm 22:1", "Matthew 27:46", "Mark 15:34"] },
+      { term: "Prophetic Detail", definition: "Pierced hands and feet, mocking onlookers, gambling for garments, parched tongue — written centuries before crucifixion existed.", relatedVerses: ["Psalm 22:7-8,14-18", "John 19:23-24,28", "Matthew 27:39-43"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 2:12", connection: "Quotes Psalm 22:22 — Christ proclaiming the Father to His brothers" },
+      { reference: "John 19:23-24", connection: "Soldiers casting lots fulfills v.18" },
+    ],
+    historicalContext: "Crucifixion was unknown in David's day, yet the psalm describes it with eerie precision. The psalm's final third (vv.22-31) bursts into worship and missions — the cross leads inevitably to global praise.",
+    applicationQuestions: ["When you feel forsaken, how does it change things to know Christ has been there first?", "How does Psalm 22 deepen your reading of Good Friday?", "How does the psalm's ending shape your view of God's mission?"],
+  },
+  // PSALM 51 — REPENTANCE
+  {
+    book: "Psalms", chapter: 51, title: "Create in Me a Clean Heart: David's Repentance",
+    summary: "After his sin with Bathsheba, David's prayer becomes the church's manual for repentance — owning guilt, pleading mercy, and asking for inward renewal by God's Spirit.",
+    keyThemes: ["Confession", "Mercy", "Inward renewal", "Restored joy"],
+    theologicalConcepts: [
+      { term: "Genuine Repentance", definition: "True repentance owns sin without excuse, pleads only mercy, and longs for transformation — not just relief from consequences.", relatedVerses: ["Psalm 51:3-4,17", "2 Corinthians 7:10", "1 John 1:9"] },
+      { term: "Regeneration Longing", definition: "'Create in me a clean heart' uses the verb of Genesis 1 — only God can make new what sin has corrupted.", relatedVerses: ["Psalm 51:10", "Ezekiel 36:26", "Titus 3:5", "2 Corinthians 5:17"] },
+    ],
+    crossReferences: [
+      { reference: "2 Samuel 12", connection: "The narrative occasion: Nathan's confrontation" },
+      { reference: "Luke 18:13", connection: "The tax collector's prayer echoes David's posture" },
+    ],
+    historicalContext: "Psalm 51 became a central penitential psalm in synagogue and church liturgy. Its placement after the Bathsheba episode shows that even Israel's greatest king is saved only by mercy.",
+    applicationQuestions: ["What sin do you need to name without excuse?", "How does asking for a 'clean heart' differ from asking for better behavior?", "Where do you need restored joy of salvation?"],
+  },
+  // ISAIAH 6 — THRONE VISION
+  {
+    book: "Isaiah", chapter: 6, title: "Holy, Holy, Holy: Isaiah's Throne Vision",
+    summary: "In the year King Uzziah died, Isaiah sees the LORD high and lifted up. Seraphim cry 'Holy, holy, holy.' Undone by glory, cleansed by coal, Isaiah hears 'Whom shall I send?' and answers 'Here am I.'",
+    keyThemes: ["God's holiness", "Conviction of sin", "Cleansing", "Sending"],
+    theologicalConcepts: [
+      { term: "Holiness of God", definition: "Triple repetition is the Hebrew superlative — God is the holiest possible. His holiness exposes our sinfulness and is the foundation of all worship.", relatedVerses: ["Isaiah 6:3", "Revelation 4:8", "1 Peter 1:15-16"] },
+      { term: "Cleansing by Sacrifice", definition: "The burning coal from the altar — fire from sacrifice — touches Isaiah's lips. Atonement precedes mission.", relatedVerses: ["Isaiah 6:6-7", "Hebrews 9:22", "1 John 1:7"] },
+      { term: "Call and Commission", definition: "Only after cleansing does Isaiah hear the call. Mission flows from worship and forgiveness, not raw willpower.", relatedVerses: ["Isaiah 6:8", "Matthew 28:18-20", "Romans 10:14-15"] },
+    ],
+    crossReferences: [
+      { reference: "John 12:41", connection: "John says Isaiah 'saw His glory' — referring to Christ" },
+      { reference: "Revelation 4", connection: "John's throne vision draws directly on Isaiah 6" },
+    ],
+    historicalContext: "Uzziah's death (~740 BC) ended a long, prosperous reign and triggered political anxiety. Just when the earthly throne emptied, Isaiah sees the true throne — never vacant, never shaken.",
+    applicationQuestions: ["When have you sensed God's holiness undoing your self-image?", "How does cleansing-then-sending shape your understanding of ministry?", "What 'Here am I' is God asking of you?"],
+  },
+  // JEREMIAH 31 — NEW COVENANT
+  {
+    book: "Jeremiah", chapter: 31, title: "I Will Make a New Covenant",
+    summary: "Amid coming exile, Jeremiah announces the new covenant: God's law written on hearts, sins remembered no more, and direct knowledge of the LORD by all His people.",
+    keyThemes: ["New covenant", "Internalized law", "Forgiveness", "Universal knowledge of God"],
+    theologicalConcepts: [
+      { term: "New Covenant", definition: "Unlike Sinai, this covenant is internal (law on hearts), personal (all shall know God), and final (sins remembered no more). Sealed by Christ's blood.", relatedVerses: ["Jeremiah 31:31-34", "Luke 22:20", "Hebrews 8:6-13", "2 Corinthians 3:6"] },
+      { term: "Forgetting Sin", definition: "God's not-remembering is covenantal: He chooses not to bring our sins to account. The cross is the ground.", relatedVerses: ["Jeremiah 31:34", "Isaiah 43:25", "Hebrews 10:17"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 8:8-12", connection: "Quotes Jeremiah 31 in full to argue Christ mediates a better covenant" },
+      { reference: "Ezekiel 36:26-27", connection: "Parallel promise of new heart and new Spirit" },
+    ],
+    historicalContext: "Jeremiah ministered through the collapse of Judah and the Babylonian exile. When everything visible — temple, city, kingship — was being destroyed, God promised a covenant nothing could destroy.",
+    applicationQuestions: ["How does 'law written on the heart' differ from law on stone?", "What sins do you struggle to believe God has truly forgotten?", "How does the new covenant shape your view of communion?"],
+  },
+  // EZEKIEL 37 — DRY BONES
+  {
+    book: "Ezekiel", chapter: 37, title: "Valley of Dry Bones: Resurrection of God's People",
+    summary: "Ezekiel sees a valley of bones — utterly dead — and prophesies until breath enters them and they stand as a vast army. A vision of national restoration that foreshadows resurrection itself.",
+    keyThemes: ["Resurrection", "Spirit's life-giving power", "Restoration", "Hope in exile"],
+    theologicalConcepts: [
+      { term: "Spirit-Given Life", definition: "The same Hebrew word (ruach) means breath, wind, and Spirit. Only God's Spirit can turn the dead into the living.", relatedVerses: ["Ezekiel 37:5,9,14", "Genesis 2:7", "John 3:8", "Romans 8:11"] },
+      { term: "Bodily Resurrection", definition: "Though immediately about Israel's restoration, the vision anticipates literal bodily resurrection at the last day.", relatedVerses: ["Daniel 12:2", "John 5:28-29", "1 Corinthians 15:50-57", "Revelation 20:12-13"] },
+    ],
+    crossReferences: [
+      { reference: "Ephesians 2:1-6", connection: "Dead in trespasses, made alive together with Christ" },
+      { reference: "John 11:43-44", connection: "Lazarus — a sign of the resurrection power Ezekiel saw" },
+    ],
+    historicalContext: "Spoken to exiles in Babylon who said 'Our bones are dried up; our hope is lost' (37:11). God answers their despair with the most extravagant resurrection imagery in the OT.",
+    applicationQuestions: ["What in your life feels like dry bones?", "How does the Spirit's life-giving power give you hope?", "Where do you need to 'prophesy' God's word over death?"],
+  },
+  // DANIEL 7 — SON OF MAN
+  {
+    book: "Daniel", chapter: 7, title: "One Like a Son of Man: The Eternal Kingdom",
+    summary: "Daniel sees four beastly kingdoms rise and fall, then 'one like a son of man' come to the Ancient of Days and receive an everlasting dominion. Jesus' favorite self-title is born here.",
+    keyThemes: ["Sovereignty over empires", "Eternal kingdom", "Son of Man", "Final judgment"],
+    theologicalConcepts: [
+      { term: "Son of Man", definition: "A divine-human figure who receives universal kingdom from the Ancient of Days. Jesus' chosen self-designation, claiming both humanity and divine authority.", relatedVerses: ["Daniel 7:13-14", "Mark 14:61-64", "Matthew 26:64", "Revelation 1:13-14"] },
+      { term: "Sovereignty Over Empires", definition: "Beastly empires roar and devour, but their times are measured. God's kingdom alone endures.", relatedVerses: ["Daniel 7:17-18,27", "Psalm 2", "Revelation 11:15"] },
+    ],
+    crossReferences: [
+      { reference: "Mark 14:61-64", connection: "Jesus applies Daniel 7 to Himself before the high priest — and is condemned for it" },
+      { reference: "Revelation 1:13-14; 5:1-14", connection: "Christ as the Son of Man receiving worship and the scroll" },
+    ],
+    historicalContext: "Daniel writes from Babylonian exile, when empires seemed to define ultimate reality. The vision unmasks them as beasts and crowns the true King.",
+    applicationQuestions: ["How does this vision relativize the 'beasts' of our age?", "Why is 'Son of Man' such a profound title for Jesus?", "How does an eternal kingdom shape your investments?"],
+  },
+  // JONAH 2 — FROM THE DEEP
+  {
+    book: "Jonah", chapter: 2, title: "Out of the Belly of Sheol: Jonah's Prayer",
+    summary: "Inside the great fish, Jonah prays a psalm woven from many psalms — repenting, remembering, and confessing 'Salvation belongs to the LORD.' He is then delivered onto dry land.",
+    keyThemes: ["Repentance from the depths", "Sovereign salvation", "Sign of Jonah", "God's mercy to the nations"],
+    theologicalConcepts: [
+      { term: "Sign of Jonah", definition: "Jesus identifies His three days in the tomb with Jonah's three days in the fish — death and deliverance as God's authenticating sign.", relatedVerses: ["Jonah 1:17", "Matthew 12:39-41", "Matthew 16:4"] },
+      { term: "Salvation of the LORD", definition: "Jonah's confession is the gospel in miniature — salvation is God's work, not human merit.", relatedVerses: ["Jonah 2:9", "Psalm 3:8", "Ephesians 2:8-9"] },
+    ],
+    crossReferences: [
+      { reference: "Matthew 12:38-41", connection: "Jesus calls Jonah a sign of His own death and resurrection" },
+      { reference: "Luke 11:29-32", connection: "Nineveh's repentance will rise to judge unrepentant generations" },
+    ],
+    historicalContext: "Jonah is a prophet to Israel's worst enemy (Assyria). His reluctance, the storm, the fish, the repentance of pagans, and his sulking show a God whose mercy is larger than tribal boundaries.",
+    applicationQuestions: ["Where is God using a 'great fish' to bring you back?", "How does 'salvation belongs to the LORD' challenge self-rescue?", "Whom do you resist God showing mercy to?"],
+  },
+  // MATTHEW 28 — GREAT COMMISSION
+  {
+    book: "Matthew", chapter: 28, title: "Resurrection and the Great Commission",
+    summary: "The risen Jesus meets His disciples on a Galilean mountain and commissions them with all authority: make disciples of all nations, baptizing and teaching, and 'I am with you always.'",
+    keyThemes: ["Resurrection", "Universal authority", "Discipleship", "Trinitarian mission"],
+    theologicalConcepts: [
+      { term: "All Authority", definition: "The risen Christ claims universal authority in heaven and on earth — the basis for mission.", relatedVerses: ["Matthew 28:18", "Philippians 2:9-11", "Ephesians 1:20-22"] },
+      { term: "Trinitarian Baptism", definition: "Baptism in the singular 'name' of Father, Son, and Spirit reveals one God in three persons.", relatedVerses: ["Matthew 28:19", "2 Corinthians 13:14", "John 14:16-17,26"] },
+      { term: "Disciple-Making", definition: "The commission is to make disciples — not just converts — by baptizing and teaching obedience to all Jesus commanded.", relatedVerses: ["Matthew 28:19-20", "Acts 2:42", "2 Timothy 2:2"] },
+    ],
+    crossReferences: [
+      { reference: "Acts 1:8", connection: "The geographic shape of the commission" },
+      { reference: "Romans 1:5", connection: "Apostleship to bring about the obedience of faith among all nations" },
+    ],
+    historicalContext: "Matthew's Gospel opens with Gentile magi worshiping Jesus and closes with Gentiles worldwide being made disciples — bracketing the whole story with God's heart for the nations.",
+    applicationQuestions: ["How does Christ's authority embolden your obedience?", "Who is God calling you to disciple, not just befriend?", "How does 'I am with you always' change your fears?"],
+  },
+  // LUKE 2 — NATIVITY
+  {
+    book: "Luke", chapter: 2, title: "Unto You Is Born a Savior: The Nativity",
+    summary: "Caesar's decree drives Joseph and Mary to Bethlehem, where the Savior of the world is born in a feeding trough. Angels announce the news first to shepherds — the lowly hear first.",
+    keyThemes: ["Incarnation", "Humility of God", "Good news for the lowly", "Fulfillment of prophecy"],
+    theologicalConcepts: [
+      { term: "Incarnation in Lowliness", definition: "God enters history not in a palace but in a feed trough, not to elites but to shepherds. The manner reveals the message.", relatedVerses: ["Luke 2:7,12", "Philippians 2:6-8", "2 Corinthians 8:9"] },
+      { term: "Savior, Christ, Lord", definition: "The angel's titles claim everything Caesar claimed — and more. The true Lord is the baby in the manger.", relatedVerses: ["Luke 2:10-11", "Acts 2:36", "Philippians 2:9-11"] },
+    ],
+    crossReferences: [
+      { reference: "Micah 5:2", connection: "Bethlehem prophesied as the Messiah's birthplace" },
+      { reference: "Isaiah 9:6-7", connection: "Unto us a child is born" },
+    ],
+    historicalContext: "Roman emperors were called 'savior' and 'lord' and their birthdays were 'good news.' Luke deliberately reuses imperial vocabulary to declare the true emperor.",
+    applicationQuestions: ["How does God's choice to come low reshape your view of greatness?", "Why might God announce the gospel first to shepherds?", "What does 'no room' say about our welcome of Christ today?"],
+  },
+  // LUKE 24 — EMMAUS AND RESURRECTION
+  {
+    book: "Luke", chapter: 24, title: "On the Road to Emmaus: He Opened the Scriptures",
+    summary: "The risen Jesus walks unrecognized with two disciples, opens the Scriptures to show Himself as their central subject, and is known to them in the breaking of the bread.",
+    keyThemes: ["Resurrection", "Christ-centered Scripture", "Recognition", "Word and table"],
+    theologicalConcepts: [
+      { term: "Christ-Centered Hermeneutics", definition: "Jesus shows that 'Moses and all the Prophets' speak of Him. The whole OT is read rightly only in light of His death and resurrection.", relatedVerses: ["Luke 24:27,44-47", "John 5:39", "2 Corinthians 1:20"] },
+      { term: "Word and Sacrament", definition: "Hearts burn at the Word; eyes open at the table. Luke models Christian worship's twin rhythms.", relatedVerses: ["Luke 24:30-32,35", "Acts 2:42", "1 Corinthians 11:23-26"] },
+    ],
+    crossReferences: [
+      { reference: "John 20", connection: "Other resurrection appearances reinforcing Luke's witness" },
+      { reference: "Acts 1:1-3", connection: "Luke's sequel continues the resurrection-empowered story" },
+    ],
+    historicalContext: "Emmaus was about seven miles from Jerusalem. The conversation captures the disorientation of the disciples after the crucifixion — and the world-rewriting effect of meeting the risen Christ in Scripture and meal.",
+    applicationQuestions: ["When have your eyes been opened to Christ in Scripture?", "How does seeing Christ in the OT change your reading?", "How do Word and table together form your faith?"],
+  },
+  // JOHN 3 — BORN AGAIN
+  {
+    book: "John", chapter: 3, title: "You Must Be Born Again",
+    summary: "Nicodemus comes by night; Jesus tells him entry into the kingdom requires new birth from above by the Spirit. Then comes John 3:16 — God's love for the world given in His Son.",
+    keyThemes: ["Regeneration", "Spirit's work", "God's love", "Faith and salvation"],
+    theologicalConcepts: [
+      { term: "Regeneration", definition: "Salvation begins with God's sovereign work of new birth by the Spirit — invisible, mysterious, and indispensable.", relatedVerses: ["John 3:3-8", "Titus 3:5", "1 Peter 1:3,23", "Ezekiel 36:26-27"] },
+      { term: "John 3:16", definition: "The gospel in a sentence: God's love, His giving, the Son, faith, and eternal life — all anchored in His character.", relatedVerses: ["John 3:16-17", "Romans 5:8", "1 John 4:9-10"] },
+      { term: "Bronze Serpent Type", definition: "As Moses lifted the serpent so Israel could look and live, the Son of Man is lifted up so all who believe may have eternal life.", relatedVerses: ["John 3:14-15", "Numbers 21:8-9"] },
+    ],
+    crossReferences: [
+      { reference: "Ephesians 2:1-10", connection: "Made alive together with Christ — regeneration explained" },
+      { reference: "James 1:18", connection: "Brought forth by the word of truth" },
+    ],
+    historicalContext: "Nicodemus, a Pharisee and member of the Sanhedrin, comes at night — perhaps for safety, perhaps as a spiritual symbol. He reappears defending Jesus (7:50) and burying Him (19:39); the new birth seems to take root.",
+    applicationQuestions: ["Have you been born from above, not just informed about Jesus?", "How does John 3:16 land afresh when read slowly?", "Where do you need to simply 'look and live'?"],
+  },
+  // JOHN 17 — HIGH PRIESTLY PRAYER
+  {
+    book: "John", chapter: 17, title: "The High Priestly Prayer: That They May Be One",
+    summary: "On the way to Gethsemane, Jesus prays for Himself, His disciples, and all who will believe through their word — that they may be one as the Father and Son are one.",
+    keyThemes: ["Glory", "Sanctification by truth", "Christian unity", "Eternal life"],
+    theologicalConcepts: [
+      { term: "Eternal Life Defined", definition: "Eternal life is knowing the only true God and Jesus Christ — relational, not merely durational.", relatedVerses: ["John 17:3", "1 John 5:20", "Philippians 3:8-10"] },
+      { term: "Sanctification by Truth", definition: "'Sanctify them in the truth; your word is truth.' Holiness comes through Scripture-shaped lives.", relatedVerses: ["John 17:17", "Ephesians 5:26", "Psalm 119:9-11"] },
+      { term: "Unity as Witness", definition: "The world will know the Father sent the Son when His people are visibly one — unity is mission.", relatedVerses: ["John 17:21-23", "Ephesians 4:1-6", "Acts 4:32"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 7:25", connection: "Christ ever lives to intercede — John 17 is a window into His ongoing prayer" },
+      { reference: "Romans 8:34", connection: "Christ at God's right hand interceding for us" },
+    ],
+    historicalContext: "Often called the 'true Lord's Prayer,' John 17 lets us listen in as the Son addresses the Father on the eve of the cross — and includes us by name (v.20).",
+    applicationQuestions: ["What does it change to know Jesus prayed for you?", "Where is your life being 'sanctified by the truth'?", "How does our disunity blunt our witness?"],
+  },
+  // ACTS 9 — SAUL'S CONVERSION
+  {
+    book: "Acts", chapter: 9, title: "On the Damascus Road: Saul Becomes Paul",
+    summary: "The chief persecutor of the church is struck down by the risen Christ, blinded, baptized, and commissioned as apostle to the Gentiles. Grace conquers the worst opponent.",
+    keyThemes: ["Sovereign grace", "Christ identified with His church", "Calling", "Transformation"],
+    theologicalConcepts: [
+      { term: "Union with Christ", definition: "'Saul, why are you persecuting Me?' — Christ counts attacks on His church as attacks on Himself. Believers are united to Christ.", relatedVerses: ["Acts 9:4-5", "1 Corinthians 12:12", "Matthew 25:40,45"] },
+      { term: "Grace to the Chief of Sinners", definition: "Paul's conversion demonstrates that no one is beyond grace — and becomes the prototype of mercy.", relatedVerses: ["Acts 9:13-16", "1 Timothy 1:12-17"] },
+    ],
+    crossReferences: [
+      { reference: "Galatians 1:11-17", connection: "Paul's own account of his conversion and call" },
+      { reference: "Philippians 3:4-11", connection: "What he counted gain he counts loss for Christ" },
+    ],
+    historicalContext: "Saul was a Pharisee trained under Gamaliel, zealous for the law, present at Stephen's stoning. His sudden reversal cannot be explained psychologically — it required the appearance of the risen Christ.",
+    applicationQuestions: ["Whom are you tempted to consider beyond grace?", "How does Christ's identification with His people shape how you treat them?", "What is your 'Damascus' story — sudden or slow?"],
+  },
+  // ROMANS 3 — JUSTIFICATION
+  {
+    book: "Romans", chapter: 3, title: "Justified Freely by His Grace",
+    summary: "Paul concludes that all have sinned, then unveils the gospel: God's righteousness comes through faith in Christ, by His blood, freely justifying sinners while remaining just.",
+    keyThemes: ["Universal sin", "Justification", "Propitiation", "Faith alone"],
+    theologicalConcepts: [
+      { term: "Justification", definition: "God declares the believing sinner righteous on the basis of Christ's work — a legal verdict, not a moral process.", relatedVerses: ["Romans 3:24,28", "Galatians 2:16", "Romans 5:1"] },
+      { term: "Propitiation", definition: "Christ's sacrifice satisfies God's just wrath against sin, allowing God to be 'just and the justifier' of those who believe.", relatedVerses: ["Romans 3:25-26", "1 John 2:2", "Hebrews 2:17"] },
+    ],
+    crossReferences: [
+      { reference: "Galatians 2:15-21", connection: "Justification by faith, not works of the law" },
+      { reference: "Isaiah 53:11", connection: "'My righteous servant will justify many'" },
+    ],
+    historicalContext: "Paul writes into a Roman church mixed of Jews and Gentiles, where pride and prejudice cut both ways. The gospel of free justification levels the ground at the foot of the cross.",
+    applicationQuestions: ["How does justification differ from sanctification?", "Where do you still try to earn standing with God?", "How is God both just AND the justifier?"],
+  },
+  // 1 CORINTHIANS 13 — LOVE
+  {
+    book: "1 Corinthians", chapter: 13, title: "The More Excellent Way: Love",
+    summary: "Set in a discussion of spiritual gifts, Paul writes the most beautiful description of love in literature — its necessity, its character, and its permanence.",
+    keyThemes: ["Love as supreme", "Character of love", "Permanence of love", "Maturity"],
+    theologicalConcepts: [
+      { term: "Agape Love", definition: "Self-giving, other-oriented love that mirrors God's own. Not feeling but committed action toward the good of another.", relatedVerses: ["1 Corinthians 13:4-7", "John 13:34-35", "1 John 4:7-11"] },
+      { term: "Gifts vs. Love", definition: "Spiritual gifts without love are noise. Love is what makes any gift Christian.", relatedVerses: ["1 Corinthians 13:1-3", "Galatians 5:6"] },
+      { term: "Love Never Ends", definition: "Prophecies, tongues, and knowledge will pass. Faith and hope endure to the consummation; love continues forever.", relatedVerses: ["1 Corinthians 13:8-13", "1 John 4:16"] },
+    ],
+    crossReferences: [
+      { reference: "Romans 5:5", connection: "God's love poured into our hearts by the Spirit" },
+      { reference: "Ephesians 3:17-19", connection: "Knowing the love of Christ that surpasses knowledge" },
+    ],
+    historicalContext: "The Corinthians prized showy gifts. Paul drops a devastating chapter on love between two chapters on tongues and prophecy — recentering the whole church on what matters.",
+    applicationQuestions: ["Substitute your name for 'love' in vv.4-7 — where does it ring false?", "Which gift do you exalt above love?", "How does love's permanence reshape your priorities?"],
+  },
+  // 1 CORINTHIANS 15 — RESURRECTION
+  {
+    book: "1 Corinthians", chapter: 15, title: "If Christ Has Not Been Raised: The Resurrection",
+    summary: "Paul defends bodily resurrection — Christ's and ours. Without it, faith is futile and we are still in sins. With it, death is swallowed up in victory.",
+    keyThemes: ["Bodily resurrection", "Gospel essentials", "Victory over death", "Future hope"],
+    theologicalConcepts: [
+      { term: "The Gospel Defined", definition: "Paul gives the earliest creed: Christ died for our sins, was buried, rose on the third day, and appeared — all 'according to the Scriptures.'", relatedVerses: ["1 Corinthians 15:3-8", "Luke 24:46-47", "Romans 1:1-4"] },
+      { term: "Resurrection Body", definition: "Not disembodied spirits but transformed, glorified, imperishable bodies — sown perishable, raised imperishable.", relatedVerses: ["1 Corinthians 15:42-44,53-54", "Philippians 3:21", "1 John 3:2"] },
+      { term: "Last Adam", definition: "Christ is the second Adam — the head of a new humanity in whom death is reversed.", relatedVerses: ["1 Corinthians 15:21-22,45-49", "Romans 5:12-21"] },
+    ],
+    crossReferences: [
+      { reference: "Romans 6:5", connection: "Union with Christ in His resurrection" },
+      { reference: "Revelation 21:4", connection: "Death finally undone in the new creation" },
+    ],
+    historicalContext: "Greek philosophy prized escape from the body; Corinthians wanted a 'spiritual' resurrection without bodies. Paul insists Christian hope is physical — God redeems creation, not abandons it.",
+    applicationQuestions: ["How does bodily resurrection change how you treat your body now?", "What would change if you really believed 1 Cor 15:58?", "How does resurrection hope steady you in grief?"],
+  },
+  // GALATIANS 5 — FRUIT OF THE SPIRIT
+  {
+    book: "Galatians", chapter: 5, title: "Freedom and the Fruit of the Spirit",
+    summary: "Paul contrasts the works of the flesh with the fruit of the Spirit, and calls believers to use their freedom not for the flesh but to serve one another in love.",
+    keyThemes: ["Christian freedom", "Flesh vs. Spirit", "Fruit-bearing life", "Love as fulfillment of law"],
+    theologicalConcepts: [
+      { term: "Walking by the Spirit", definition: "Holiness comes not by law-keeping willpower but by keeping in step with the Spirit who indwells the believer.", relatedVerses: ["Galatians 5:16,25", "Romans 8:4-13", "Ephesians 5:18"] },
+      { term: "Fruit (Singular)", definition: "'Fruit' is singular — one cluster of nine graces grown by the Spirit together. They are organic, not earned.", relatedVerses: ["Galatians 5:22-23", "John 15:4-5"] },
+    ],
+    crossReferences: [
+      { reference: "Romans 7-8", connection: "The struggle with the flesh and the Spirit's liberation" },
+      { reference: "James 3:17-18", connection: "Wisdom from above produces similar fruit" },
+    ],
+    historicalContext: "Galatians confronts a 'different gospel' that added law to Christ. Chapter 5 shows that gospel freedom does not produce lawlessness but Spirit-grown holiness.",
+    applicationQuestions: ["Which fruit is most lacking — and what 'work of the flesh' tends to crowd it out?", "How does fruit differ from forced behavior?", "Where are you using freedom selfishly instead of to serve?"],
+  },
+  // EPHESIANS 2 — SAVED BY GRACE
+  {
+    book: "Ephesians", chapter: 2, title: "By Grace You Have Been Saved",
+    summary: "Once dead in sin, believers are made alive with Christ by grace through faith — and Jew and Gentile are united in one new humanity through the cross.",
+    keyThemes: ["Grace alone", "New creation", "Reconciliation", "One body"],
+    theologicalConcepts: [
+      { term: "Grace Through Faith", definition: "Salvation is God's gift from start to finish — not earned, not boasted in, freely received.", relatedVerses: ["Ephesians 2:8-9", "Romans 3:24", "Titus 3:5"] },
+      { term: "Created for Good Works", definition: "Works don't save us, but we are saved for them — God's workmanship, prepared in advance to walk in.", relatedVerses: ["Ephesians 2:10", "Titus 2:14", "James 2:17"] },
+      { term: "One New Humanity", definition: "The cross tears down the wall between Jew and Gentile, making one new people — reconciliation is gospel evidence.", relatedVerses: ["Ephesians 2:14-18", "Galatians 3:28", "Colossians 3:11"] },
+    ],
+    crossReferences: [
+      { reference: "Colossians 2:13-15", connection: "Dead in trespasses, made alive with Christ" },
+      { reference: "Romans 5:1-2", connection: "Peace with God through justification by faith" },
+    ],
+    historicalContext: "Ephesus held the famous temple of Artemis and a strict separation between Jews and Gentiles. Paul announces a temple of living people where the dividing walls are demolished.",
+    applicationQuestions: ["Where do you still live as if salvation depends on you?", "What 'good works' has God prepared for you to walk in?", "What 'dividing walls' must the gospel tear down in your context?"],
+  },
+  // PHILIPPIANS 2 — KENOSIS
+  {
+    book: "Philippians", chapter: 2, title: "The Mind of Christ: He Humbled Himself",
+    summary: "Paul calls the church to humility by holding up Christ — who emptied Himself, took the form of a servant, was obedient unto death, and was therefore exalted as Lord of all.",
+    keyThemes: ["Humility", "Incarnation", "Servant lordship", "Exaltation"],
+    theologicalConcepts: [
+      { term: "Kenosis", definition: "Christ 'emptied Himself' — not of deity but of the privileges of deity — taking the form of a servant. The pattern for Christian humility.", relatedVerses: ["Philippians 2:6-8", "John 13:3-5", "2 Corinthians 8:9"] },
+      { term: "Cosmic Lordship", definition: "Because Christ humbled Himself, God exalted Him and gave Him the name above every name — every knee will bow.", relatedVerses: ["Philippians 2:9-11", "Isaiah 45:23", "Revelation 5:13"] },
+    ],
+    crossReferences: [
+      { reference: "Isaiah 53", connection: "The suffering Servant whose humiliation precedes exaltation" },
+      { reference: "Matthew 23:11-12", connection: "Whoever humbles himself will be exalted" },
+    ],
+    historicalContext: "Philippi was a Roman colony obsessed with status and rank. Paul's hymn dismantles status-grasping by enthroning a crucified Servant as cosmic Lord.",
+    applicationQuestions: ["Where do you grasp at status Christ let go of?", "How does Christ's humility reshape conflict?", "What would 'taking the form of a servant' look like this week?"],
+  },
+  // HEBREWS 11 — HALL OF FAITH
+  {
+    book: "Hebrews", chapter: 11, title: "By Faith: The Cloud of Witnesses",
+    summary: "A roll call of OT believers who lived by faith — assured of what they hoped for, certain of what they did not see — pointing to the better hope fulfilled in Christ.",
+    keyThemes: ["Faith defined", "Endurance", "Heavenly homeland", "Christ as fulfillment"],
+    theologicalConcepts: [
+      { term: "Faith", definition: "Assurance of things hoped for, conviction of things unseen — trusting God's character and promise against present evidence.", relatedVerses: ["Hebrews 11:1,6", "Romans 4:18-21", "2 Corinthians 5:7"] },
+      { term: "Pilgrim Identity", definition: "Believers are 'strangers and exiles' seeking a better, heavenly country — present world is not our final home.", relatedVerses: ["Hebrews 11:13-16", "Philippians 3:20", "1 Peter 2:11"] },
+    ],
+    crossReferences: [
+      { reference: "Hebrews 12:1-2", connection: "Surrounded by witnesses, we run looking to Jesus" },
+      { reference: "Romans 4", connection: "Abraham as paradigm of justifying faith" },
+    ],
+    historicalContext: "Hebrews addresses Jewish Christians tempted to drift back under persecution. The chapter calls them to join a long line of suffering, faithful people who chose unseen reward over present comfort.",
+    applicationQuestions: ["Whose faith story has shaped yours?", "Where is God asking you to trust against the evidence?", "What 'better country' is your faith oriented toward?"],
+  },
+  // JAMES 1 — TRIALS AND WISDOM
+  {
+    book: "James", chapter: 1, title: "Joy in Trials, Wisdom from Above",
+    summary: "James opens with paradox — count trials as joy because they produce endurance; ask in faith for wisdom; be doers and not hearers only.",
+    keyThemes: ["Trials", "Wisdom", "Doing the Word", "Heart religion"],
+    theologicalConcepts: [
+      { term: "Trials Producing Maturity", definition: "Suffering, met with faith, produces endurance — endurance produces maturity. Trials are God's classroom.", relatedVerses: ["James 1:2-4", "Romans 5:3-5", "1 Peter 1:6-7"] },
+      { term: "Praying for Wisdom", definition: "God gives wisdom generously to all who ask in faith without doubting His character.", relatedVerses: ["James 1:5-8", "Proverbs 2:6", "1 Kings 3:9-12"] },
+      { term: "Doers of the Word", definition: "Hearing without doing is self-deception. True religion shows up in obedience, care for the vulnerable, and personal holiness.", relatedVerses: ["James 1:22-27", "Matthew 7:24-27", "Luke 6:46-49"] },
+    ],
+    crossReferences: [
+      { reference: "Romans 12:2", connection: "Transformation by renewed mind, not merely informed mind" },
+      { reference: "Proverbs 1:7", connection: "Fear of the LORD is the beginning of wisdom" },
+    ],
+    historicalContext: "James writes to scattered Jewish Christians under social and economic pressure. His practical wisdom resembles Jesus' Sermon on the Mount — sharp, concrete, demanding.",
+    applicationQuestions: ["Which trial is God currently using to mature you?", "Where do you need to ask for wisdom rather than just venting?", "What 'hearing without doing' do you need to repent of?"],
+  },
+  // 1 JOHN 4 — GOD IS LOVE
+  {
+    book: "1 John", chapter: 4, title: "God Is Love",
+    summary: "John grounds Christian love in God's very nature: He sent His Son as the propitiation for our sins, and we love because He first loved us.",
+    keyThemes: ["God's nature as love", "Propitiation", "Love among believers", "Assurance"],
+    theologicalConcepts: [
+      { term: "God Is Love", definition: "Not merely loving but love — the eternal triune fellowship is the source of all love. To know God is to love.", relatedVerses: ["1 John 4:7-8,16", "John 17:24-26", "Romans 5:5"] },
+      { term: "Propitiation Defined as Love", definition: "Love is not defined by sentiment but by the Father sending the Son to absorb wrath for us.", relatedVerses: ["1 John 4:9-10", "Romans 5:8", "John 3:16"] },
+      { term: "Perfect Love Casts Out Fear", definition: "Confidence on the day of judgment grows as we are perfected in love — fear of punishment recedes.", relatedVerses: ["1 John 4:17-18", "Romans 8:15", "Hebrews 10:19-22"] },
+    ],
+    crossReferences: [
+      { reference: "John 13:34-35", connection: "By this all will know you are My disciples — if you have love" },
+      { reference: "Galatians 5:6", connection: "Faith working through love" },
+    ],
+    historicalContext: "John writes against early proto-gnostic teachers who denied Christ's full incarnation and minimized ethics. His answer: real Christianity is incarnational love rooted in the cross.",
+    applicationQuestions: ["How does defining love by the cross differ from cultural definitions?", "Where does fear still rule where love should?", "Whom is the Spirit asking you to love sacrificially this week?"],
+  },
+  // REVELATION 5 — WORTHY IS THE LAMB
+  {
+    book: "Revelation", chapter: 5, title: "Worthy Is the Lamb",
+    summary: "In heaven's throne room, no one is found worthy to open the scroll — until the Lion of Judah appears as a slain Lamb. Heaven erupts in worship: 'Worthy is the Lamb who was slain.'",
+    keyThemes: ["Christ's worthiness", "Lion and Lamb", "Cosmic worship", "Redemption by blood"],
+    theologicalConcepts: [
+      { term: "Lion as Lamb", definition: "John hears 'Lion' but sees 'Lamb' — Christ conquers by being slain. Power redefined by the cross.", relatedVerses: ["Revelation 5:5-6", "John 1:29", "1 Corinthians 1:23-24"] },
+      { term: "Universal Redemption", definition: "The Lamb purchased people 'from every tribe and language and people and nation' — the cross's reach is global.", relatedVerses: ["Revelation 5:9-10", "Revelation 7:9", "Matthew 28:19"] },
+    ],
+    crossReferences: [
+      { reference: "Genesis 49:9-10", connection: "Lion of Judah prophesied" },
+      { reference: "Isaiah 53:7", connection: "Like a lamb led to the slaughter" },
+    ],
+    historicalContext: "Written to churches under Roman pressure, Revelation 5 unveils the true throne room behind earthly powers. The Lamb's worship is meant to steady persecuted saints.",
+    applicationQuestions: ["How does Christ's power-as-self-giving challenge our power instincts?", "What does worship look like in your life compared to heaven's?", "How does the global Lamb-bought church shape your love for other cultures?"],
+  },
 ];
+
+
 
 export function getChapterTheology(book: string, chapter: number): ChapterTheology | undefined {
   return chapterTheology.find(
